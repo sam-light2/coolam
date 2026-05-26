@@ -202,19 +202,59 @@ section{scroll-margin-top:84px;}
 @keyframes cue{0%{transform:scaleY(.2);transform-origin:top;opacity:.4}50%{transform:scaleY(1);opacity:1}100%{transform:scaleY(.2);transform-origin:bottom;opacity:.4}}
 
 /* ============================================================
-   ABOUT  (columns top-aligned so "Who We Are" rises up)
+   ABOUT  (editorial feature: statement, image + narrative, stats)
    ============================================================ */
 .about{padding-block:var(--sec-pad);position:relative;}
-.about-top{display:grid;grid-template-columns:1fr;gap:2.5rem;align-items:start;}
-@media(min-width:900px){.about-top{grid-template-columns:1.05fr .95fr;gap:5rem;}}
+
+/* opening statement */
+.about-head{max-width:60ch;}
 .about-statement{
   font-family:"Fraunces",serif;font-weight:360;font-optical-sizing:auto;
-  font-size:clamp(1.8rem,1.1rem+2.8vw,3.1rem);line-height:1.12;letter-spacing:-.015em;color:var(--ink);
-  margin:1.3rem 0 0;
+  font-size:clamp(1.9rem,1.1rem+3vw,3.3rem);line-height:1.12;letter-spacing:-.015em;color:var(--ink);
+  margin:1.3rem 0 0;text-wrap:balance;
 }
 .about-statement em{font-style:italic;color:var(--clay);}
-.about-body p{margin:0 0 1.1rem;color:var(--ink-soft);}
-.about-body p:last-child{margin-bottom:0;}
+
+/* editorial feature row: image + narrative */
+.about-feature{
+  margin-top:clamp(3.25rem,6vw,5.5rem);display:grid;grid-template-columns:1fr;
+  gap:clamp(3rem,6vw,4.5rem);align-items:center;
+}
+@media(min-width:920px){.about-feature{grid-template-columns:1.04fr .96fr;gap:clamp(3.5rem,5vw,6rem);}}
+
+.about-figure{position:relative;}
+.about-figure-media{
+  position:relative;aspect-ratio:5/4;border-radius:var(--r-lg);overflow:hidden;
+  background:linear-gradient(150deg,#3c4633 0%,#2a3122 60%,#20251c 100%);box-shadow:var(--shadow-lift);
+}
+.about-figure-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+/* placeholder shown if the photo is not present yet */
+.about-figure-ph{position:absolute;inset:0;}
+.about-figure-ph svg{position:absolute;inset:0;width:100%;height:100%;opacity:.55;}
+.about-figure-ph .label{
+  position:absolute;left:50%;bottom:1.4rem;transform:translateX(-50%);
+  font-family:"Fraunces",serif;font-style:italic;color:rgba(239,232,216,.62);font-size:.95rem;letter-spacing:.02em;white-space:nowrap;
+}
+.about-figure-frame{position:absolute;inset:0;border-radius:var(--r-lg);box-shadow:inset 0 0 0 1px rgba(33,31,25,.10);pointer-events:none;}
+
+/* overlapping credibility badge */
+.about-badge{
+  position:absolute;left:clamp(-.5rem,-1vw,-1.6rem);bottom:clamp(-1rem,-2vw,-1.8rem);z-index:2;
+  background:var(--cream);border:1px solid var(--sand);border-radius:var(--r);
+  padding:1.05rem 1.5rem;box-shadow:var(--shadow-soft);display:flex;align-items:center;gap:1rem;max-width:80%;
+}
+.about-badge .bnum{font-family:"Fraunces",serif;font-weight:460;font-size:clamp(2.1rem,1.4rem+1.5vw,2.8rem);color:var(--clay);line-height:1;letter-spacing:-.01em;}
+.about-badge .blabel{font-size:.74rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--stone);line-height:1.45;}
+@media(max-width:560px){.about-badge{position:static;margin-top:1.1rem;max-width:none;}}
+
+/* narrative column */
+.about-narrative .eyebrow{margin-bottom:1.1rem;}
+.about-narrative p{margin:0 0 1.15rem;color:var(--ink-soft);}
+.about-narrative p:last-of-type{margin-bottom:0;}
+.about-sign{margin-top:1.9rem;display:flex;align-items:center;gap:1rem;}
+.about-sign .rule{width:36px;height:1px;background:var(--clay);flex:none;}
+.about-sign .names{display:block;font-family:"Fraunces",serif;font-style:italic;font-size:1.12rem;color:var(--ink);line-height:1.2;}
+.about-sign .sub{display:block;margin-top:.25rem;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--stone);font-weight:600;}
 
 .stats{
   margin-top:clamp(3rem,6vw,5rem);display:grid;gap:1px;background:var(--sand);
@@ -328,7 +368,7 @@ section{scroll-margin-top:84px;}
 .pullquote{margin-top:clamp(3rem,6vw,5rem);background:var(--forest);color:var(--paper-on-dark);border-radius:var(--r-lg);padding:clamp(2.6rem,6vw,5rem) clamp(1.8rem,5vw,4.5rem);position:relative;overflow:hidden;}
 .pullquote::before{content:"";position:absolute;inset:0;background:radial-gradient(70% 90% at 12% 10%,rgba(196,154,94,.18),transparent 55%);}
 .pullquote .qmark{font-family:"Fraunces",serif;font-size:clamp(4rem,12vw,7rem);line-height:.5;color:var(--gold);opacity:.55;display:block;height:.4em;}
-.pullquote blockquote{position:relative;margin:1rem 0 0;font-family:"Fraunces",serif;font-weight:340;font-style:italic;font-size:clamp(1.4rem,1rem+2.2vw,2.4rem);line-height:1.3;letter-spacing:-.01em;color:var(--paper-on-dark);max-width:26ch;}
+.pullquote blockquote{position:relative;margin:1rem 0 0;font-family:"Fraunces",serif;font-weight:340;font-style:italic;font-size:clamp(1.85rem,1.15rem+3.3vw,3.35rem);line-height:1.22;letter-spacing:-.012em;color:var(--paper-on-dark);max-width:30ch;}
 .pullquote cite{position:relative;display:block;margin-top:1.6rem;font-style:normal;font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:600;}
 
 /* ============================================================
@@ -475,3 +515,15 @@ section{scroll-margin-top:84px;}
 /* focus visibility */
 a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--clay);outline-offset:3px;border-radius:4px;}
 .site-header:not(.scrolled) a:focus-visible,.hero a:focus-visible{outline-color:var(--gold);}
+
+/* ============================================================
+   REAL PHOTO LAYERS (drop over CSS placeholders; fall back gracefully)
+   ============================================================ */
+/* property card + modal photos */
+.ph-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;transition:transform .9s var(--ease);}
+.prop-card:hover .ph .ph-photo{transform:scale(1.06);}
+.modal-ph .ph-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;}
+/* keep the duplex tag above any photo */
+.ph-tag{z-index:3;}
+/* team headshots */
+.member-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;z-index:1;}

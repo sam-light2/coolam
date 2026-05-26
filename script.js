@@ -13,13 +13,13 @@
     {p1:"#6f7d6a",p2:"#445040",p3:"#262e23"}
   ];
   var props = [
-    {addr:"3928 Hawthorn Ave", sqft:"3,200", bed:"3", bath:"3.5", pi:0},
-    {addr:"3930 Hawthorn Ave", sqft:"3,450", bed:"3", bath:"3.5", pi:1},
-    {addr:"4030 Hawthorn Ave", sqft:"3,800", bed:"4", bath:"4",   pi:2},
-    {addr:"4032 Hawthorn Ave", sqft:"4,000", bed:"4", bath:"4.5", pi:3}
+    {addr:"3928 Hawthorn Ave", sqft:"3,498", bed:"3", bath:"3.5", pi:0, img:"images/3928.webp"},
+    {addr:"3930 Hawthorn Ave", sqft:"3,465", bed:"3", bath:"3.5", pi:1, img:"images/3930.webp"},
+    {addr:"4030 Hawthorn Ave", sqft:"3,218", bed:"3", bath:"3.5", pi:2, img:"images/4030.jpg"},
+    {addr:"4032 Hawthorn Ave", sqft:"3,140", bed:"3", bath:"3.5", pi:3, img:"images/4032.jpg"}
   ];
 
-  /* art-directed placeholder markup */
+  /* art-directed CSS placeholder (renders behind the real photo) */
   function phMarkup(pi){
     var c = palettes[pi];
     return '<div class="img" style="--p1:'+c.p1+';--p2:'+c.p2+';--p3:'+c.p3+'">'
@@ -35,6 +35,11 @@
       + '</div>';
   }
 
+  /* real photo layer; removes itself if the file is missing so the placeholder shows */
+  function photoMarkup(p){
+    return '<img class="ph-photo" src="'+p.img+'" alt="'+p.addr+' duplex exterior" loading="lazy" onerror="this.remove()">';
+  }
+
   /* build property cards */
   var grid = document.getElementById("propGrid");
   props.forEach(function(p, i){
@@ -43,7 +48,7 @@
     card.setAttribute("data-d", String((i % 2) + 1));
     card.setAttribute("aria-label", p.addr + ", view duplex details");
     card.innerHTML =
-      '<div class="ph">'+ phMarkup(p.pi) +'<span class="ph-tag">Duplex</span></div>'
+      '<div class="ph">'+ phMarkup(p.pi) + photoMarkup(p) +'<span class="ph-tag">Duplex</span></div>'
       + '<div class="prop-info">'
       +   '<h3>'+ p.addr +'</h3>'
       +   '<p class="meta">'+ p.bed +' Bed &middot; '+ p.bath +' Bath &middot; '+ p.sqft +' Sq Ft</p>'
@@ -106,7 +111,7 @@
     document.getElementById("mSqft").textContent = p.sqft;
     document.getElementById("mBed").textContent = p.bed;
     document.getElementById("mBath").textContent = p.bath;
-    document.getElementById("modalPh").innerHTML = phMarkup(p.pi);
+    document.getElementById("modalPh").innerHTML = phMarkup(p.pi) + photoMarkup(p);
     modal.classList.add("open");
     modal.setAttribute("aria-hidden","false");
     document.body.classList.add("nav-open");
