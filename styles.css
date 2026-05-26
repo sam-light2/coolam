@@ -202,15 +202,16 @@ section{scroll-margin-top:84px;}
 @keyframes cue{0%{transform:scaleY(.2);transform-origin:top;opacity:.4}50%{transform:scaleY(1);opacity:1}100%{transform:scaleY(.2);transform-origin:bottom;opacity:.4}}
 
 /* ============================================================
-   ABOUT  (full-bleed kitchen background + dark overlay; light content)
+   ABOUT  (kitchen statement band, then story + stats on light ground)
    ============================================================ */
 .about{position:relative;}
 
-/* full-width image band */
+/* ---- 1. atmospheric kitchen band: headline statement only ---- */
 .about-hero{
   position:relative;isolation:isolate;overflow:hidden;
   background:var(--forest);color:var(--paper-on-dark);
-  padding-block:clamp(5.5rem,12vw,10rem);
+  min-height:clamp(26rem,62vh,40rem);display:flex;align-items:flex-end;
+  padding-block:clamp(3rem,7vw,5rem);
 }
 .about-hero-bg{
   position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:-2;
@@ -218,46 +219,52 @@ section{scroll-margin-top:84px;}
 .about-hero-overlay{
   position:absolute;inset:0;z-index:-1;
   background:
-    linear-gradient(180deg, rgba(14,16,10,.55) 0%, rgba(14,16,10,0) 26%, rgba(14,16,10,0) 60%, rgba(13,14,9,.62) 100%),
-    rgba(20,23,15,.66);
+    linear-gradient(180deg, rgba(14,16,10,.42) 0%, rgba(14,16,10,.18) 38%, rgba(13,14,9,.66) 100%),
+    linear-gradient(90deg, rgba(13,14,9,.55) 0%, rgba(13,14,9,.12) 55%, rgba(13,14,9,0) 100%);
 }
 .about-hero-inner{position:relative;}
 .about-hero .eyebrow{color:var(--gold);}
 .about-hero .eyebrow::before{background:var(--gold);opacity:.85;}
-
 .about-statement{
   font-family:"Fraunces",serif;font-weight:340;font-optical-sizing:auto;
-  font-size:clamp(1.95rem,1.15rem+3.1vw,3.4rem);line-height:1.1;letter-spacing:-.015em;color:var(--paper-on-dark);
-  margin:1.3rem 0 0;max-width:24ch;text-wrap:balance;
+  font-size:clamp(2.1rem,1.2rem+3.4vw,3.9rem);line-height:1.08;letter-spacing:-.018em;color:var(--paper-on-dark);
+  margin:1.2rem 0 0;max-width:18ch;text-wrap:balance;text-shadow:0 1px 30px rgba(10,12,7,.45);
 }
 .about-statement em{font-style:italic;color:var(--gold);}
 
-/* narrative + signature */
-.about-narrative{margin-top:clamp(2.25rem,4vw,3.25rem);display:grid;grid-template-columns:1fr;gap:1.4rem;max-width:62ch;}
-@media(min-width:820px){.about-narrative{grid-template-columns:1fr 1fr;column-gap:clamp(2.5rem,5vw,4.5rem);row-gap:1.6rem;max-width:none;align-items:start;}}
-.about-narrative p{margin:0;color:var(--paper-on-dark);opacity:.95;line-height:1.62;}
-.about-sign{grid-column:1/-1;margin-top:.4rem;display:flex;align-items:center;gap:1rem;}
-.about-sign .rule{width:40px;height:1px;background:var(--gold);flex:none;}
-.about-sign .names{display:block;font-family:"Fraunces",serif;font-style:italic;font-size:1.15rem;color:var(--paper-on-dark);line-height:1.2;}
-.about-sign .sub{display:block;margin-top:.25rem;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:600;}
+/* ---- 2. story band on light ground: editorial two-column ---- */
+.about-story{padding-block:clamp(4rem,9vw,7rem);}
+.about-story-grid{display:grid;grid-template-columns:1fr;gap:clamp(1.75rem,4vw,3rem);}
+@media(min-width:860px){.about-story-grid{grid-template-columns:.4fr .6fr;gap:clamp(3rem,6vw,6rem);align-items:start;}}
+.about-story-aside{display:flex;flex-direction:column;gap:1.6rem;}
+.about-story-aside h2{
+  margin:.4rem 0 0;font-family:"Fraunces",serif;font-weight:360;
+  font-size:clamp(1.7rem,1.2rem+1.7vw,2.5rem);line-height:1.1;letter-spacing:-.015em;color:var(--ink);
+}
+.about-sign{display:flex;align-items:center;gap:1rem;}
+.about-sign .rule{width:40px;height:1px;background:var(--clay);flex:none;}
+.about-sign .names{display:block;font-family:"Fraunces",serif;font-style:italic;font-size:1.12rem;color:var(--ink);line-height:1.2;}
+.about-sign .sub{display:block;margin-top:.25rem;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--clay);font-weight:600;}
+.about-narrative{display:grid;gap:1.3rem;max-width:60ch;}
+.about-narrative p{margin:0;color:var(--ink-soft);line-height:1.7;font-size:clamp(1.02rem,.98rem+.25vw,1.18rem);}
 
-/* stats integrated over the image (open, hairline-divided) */
+/* ---- 3. stats: open hairline-divided row on light ground ---- */
 .about-stats{
-  margin-top:clamp(3rem,6vw,4.5rem);padding-top:clamp(2rem,4vw,2.75rem);
-  border-top:1px solid rgba(239,232,216,.22);
-  display:grid;grid-template-columns:repeat(2,1fr);gap:1.8rem 1.5rem;
+  margin-top:clamp(3rem,6vw,4.5rem);padding-top:clamp(2.25rem,4vw,3rem);
+  border-top:1px solid var(--sand-deep);
+  display:grid;grid-template-columns:repeat(2,1fr);gap:2rem 1.5rem;
 }
 @media(min-width:760px){.about-stats{grid-template-columns:repeat(4,1fr);gap:0;}}
 @media(min-width:760px){
-  .astat{padding:.25rem clamp(1rem,2.2vw,2.2rem);}
+  .astat{padding:.25rem clamp(1rem,2.4vw,2.4rem);}
   .astat:first-child{padding-left:0;}
-  .astat + .astat{border-left:1px solid rgba(239,232,216,.18);}
+  .astat + .astat{border-left:1px solid var(--sand-deep);}
 }
-.astat b{display:block;font-family:"Fraunces",serif;font-weight:400;font-size:clamp(1.65rem,1.05rem+1.5vw,2.35rem);color:var(--paper-on-dark);line-height:1.05;letter-spacing:-.01em;text-wrap:balance;}
-.astat span{display:block;margin-top:.55rem;font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(239,232,216,.8);font-weight:600;}
+.astat b{display:block;font-family:"Fraunces",serif;font-weight:420;font-size:clamp(1.7rem,1.05rem+1.6vw,2.4rem);color:var(--ink);line-height:1.05;letter-spacing:-.01em;text-wrap:balance;}
+.astat span{display:block;margin-top:.55rem;font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;color:var(--stone);font-weight:600;}
 
-/* foundation (pillars) on light background below the image band */
-.about-foundation{padding-block:clamp(4.5rem,9vw,7.5rem);}
+/* ---- 4. foundation (pillars) ---- */
+.about-foundation{padding-block:clamp(3.5rem,7vw,6rem) clamp(4.5rem,9vw,7.5rem);background:linear-gradient(180deg,#efe8da,var(--bone));}
 .about-foundation .pillars{margin-top:0;}
 
 /* pillars */
@@ -362,7 +369,7 @@ section{scroll-margin-top:84px;}
 .pullquote{margin-top:clamp(3rem,6vw,5rem);background:var(--forest);color:var(--paper-on-dark);border-radius:var(--r-lg);padding:clamp(2.6rem,6vw,5rem) clamp(1.8rem,5vw,4.5rem);position:relative;overflow:hidden;}
 .pullquote::before{content:"";position:absolute;inset:0;background:radial-gradient(70% 90% at 12% 10%,rgba(196,154,94,.18),transparent 55%);}
 .pullquote .qmark{font-family:"Fraunces",serif;font-size:clamp(4rem,12vw,7rem);line-height:.5;color:var(--gold);opacity:.55;display:block;height:.4em;}
-.pullquote blockquote{position:relative;margin:1rem 0 0;font-family:"Fraunces",serif;font-weight:340;font-style:italic;font-size:clamp(1.85rem,1.15rem+3.3vw,3.35rem);line-height:1.22;letter-spacing:-.012em;color:var(--paper-on-dark);max-width:30ch;}
+.pullquote blockquote{position:relative;margin:1rem 0 0;font-family:"Fraunces",serif;font-weight:340;font-style:italic;font-size:clamp(2.3rem,1.3rem+4.4vw,4.4rem);line-height:1.16;letter-spacing:-.015em;color:var(--paper-on-dark);max-width:24ch;}
 .pullquote cite{position:relative;display:block;margin-top:1.6rem;font-style:normal;font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:600;}
 
 /* ============================================================
@@ -521,3 +528,20 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 .ph-tag{z-index:3;}
 /* team headshots */
 .member-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;z-index:1;}
+
+/* ---- unify portfolio photos: normalize white balance / exposure, then a
+   consistent brand-tone grade so cool and warm shots read as one set ---- */
+.ph-photo,.modal-ph .ph-photo{
+  filter:saturate(.82) contrast(1.04) brightness(.97) sepia(.1) hue-rotate(-8deg);
+}
+.ph::after{
+  content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:
+    linear-gradient(180deg, rgba(24,28,18,0) 42%, rgba(22,26,16,.5) 100%),
+    rgba(64,58,40,.16);
+  mix-blend-mode:multiply;
+}
+.modal-ph::after{
+  content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:rgba(64,58,40,.16);mix-blend-mode:multiply;
+}
