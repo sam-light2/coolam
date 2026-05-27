@@ -190,7 +190,7 @@ section{scroll-margin-top:84px;}
 }
 @media(min-width:920px){
   .hero-visual{
-    position:absolute;right:calc(var(--gutter) * -3);bottom:-8vw;
+    position:absolute;right:calc(var(--gutter) * -3.5);bottom:-8vw;
     width:65vw; /* Increased */
     max-width:1300px; /* Raised the cap significantly */
     margin-top:0;justify-content:flex-end;
