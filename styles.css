@@ -176,14 +176,24 @@ section{scroll-margin-top:84px;}
 @media(min-width:920px){
   .hero-visual{
     position:absolute;right:calc(var(--gutter) * -2.2);bottom:-8vw;
-    width:60vw;max-width:1080px;margin-top:0;justify-content:flex-end;
+    width:65vw; /* Increased */
+    max-width:1300px; /* Raised the cap significantly */
+    margin-top:0;justify-content:flex-end;
   }
 }
 @media(min-width:1400px){
-  .hero-visual{width:56vw;max-width:1200px;}
+  .hero-visual{
+    width:60vw; /* Increased */
+    max-width:1500px; /* Raised the cap significantly */
+  }
 }
+
 .hero-house{
-  position:relative;z-index:2;width:100%;height:auto;display:block;
+  position:relative;z-index:2;
+  width:115%; /* Forces the house to render larger than its container */
+  max-width:none;
+  left:-7.5%; /* Centers the larger image so it doesn't just push off the right screen */
+  height:auto;display:block;
   filter:drop-shadow(0 38px 58px rgba(0,0,0,.55)) drop-shadow(0 10px 18px rgba(0,0,0,.35));
   transition:transform .7s var(--ease), filter .7s var(--ease);
   will-change:transform;
@@ -193,11 +203,13 @@ section{scroll-margin-top:84px;}
 /* warm radial halo behind/around the house, simulating dawn light */
 .hero-house-glow{
   position:absolute;left:50%;top:50%;transform:translate(-50%,-30%);
-  width:120%;height:130%;z-index:1;pointer-events:none;
+  width:130%; /* Expanded glow area */
+  height:140%; /* Expanded glow area */
+  z-index:1;pointer-events:none;
   background:
-    radial-gradient(ellipse 55% 45% at 50% 78%, rgba(232,184,116,.55) 0%, rgba(196,154,94,.28) 32%, transparent 62%),
-    radial-gradient(ellipse 70% 55% at 60% 45%, rgba(212,162,98,.32) 0%, rgba(168,118,68,.14) 38%, transparent 70%);
-  filter:blur(40px);
+    radial-gradient(ellipse 55% 45% at 50% 78%, rgba(232,184,116,.85) 0%, rgba(196,154,94,.5) 35%, transparent 75%),
+    radial-gradient(ellipse 70% 55% at 60% 45%, rgba(212,162,98,.6) 0%, rgba(168,118,68,.3) 45%, transparent 85%);
+  filter:blur(50px);
   animation:driveway 7s ease-in-out infinite;
 }
 @keyframes driveway{0%,100%{opacity:.9;}50%{opacity:1.05;}}
