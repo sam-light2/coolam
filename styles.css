@@ -348,7 +348,7 @@ section{scroll-margin-top:84px;}
   display:flex;flex-direction:column;transition:transform .5s var(--ease),box-shadow .5s var(--ease);
 }
 .member:hover{transform:translateY(-5px);box-shadow:var(--shadow-soft);}
-.member-row{display:flex;gap:0;align-items:stretch;}
+.member-row{display:flex;gap:0;align-items:stretch;flex:1;}
 .member-portrait{flex:none;width:44%;min-width:175px;min-height:clamp(20rem,26vw,24rem);position:relative;overflow:hidden;background:var(--sand);}
 .member-portrait .pp{position:absolute;inset:0;}
 .member-portrait .pp::before{content:"";position:absolute;inset:0;background:linear-gradient(165deg,var(--c1),var(--c2));}
@@ -501,13 +501,12 @@ section{scroll-margin-top:84px;}
 }
 
 /* focus visibility */
-a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--clay);outline-offset:3px;border-radius:4px;}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--clay);outline-offset:3px;}
 .site-header:not(.scrolled) a:focus-visible,.hero a:focus-visible{outline-color:var(--gold);}
-/* CTA pill: no box on mouse click; rounded ring only for keyboard focus */
-.nav-cta{border-radius:100px;}
+/* CTA pill: focus shown as a soft pill-shaped halo, never a rectangular box */
 .nav-cta:focus{outline:none;}
-.nav-cta:focus-visible{outline:2px solid var(--clay);outline-offset:3px;border-radius:100px;}
-.site-header:not(.scrolled) .nav-cta:focus-visible{outline-color:var(--gold);}
+.nav-cta:focus-visible{outline:none;border-radius:100px;box-shadow:0 0 0 3px rgba(168,90,58,.45);}
+.site-header:not(.scrolled) .nav-cta:focus-visible{box-shadow:0 0 0 3px rgba(196,154,94,.55);}
 
 /* ============================================================
    REAL PHOTO LAYERS (drop over CSS placeholders; fall back gracefully)
