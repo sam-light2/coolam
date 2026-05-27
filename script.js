@@ -148,6 +148,45 @@
     document.getElementById("name").focus();
   });
 
+  /* ---- signature section: scroll reveal + mouse interactions ---- */
+  var sigCard = document.querySelector(".signature-card");
+  if(sigCard){
+    if(!reduce && "IntersectionObserver" in window){
+      var sigIO = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting){ e.target.classList.add("in"); sigIO.unobserve(e.target); }
+        });
+      }, {threshold:.28, rootMargin:"0px 0px -6% 0px"});
+      sigIO.observe(sigCard);
+    } else {
+      sigCard.classList.add("in");
+    }
+
+    /* mouse-tracked sheen + subtle 3D portrait tilt — desktop fine-pointer only */
+    if(!reduce && window.matchMedia && window.matchMedia("(pointer:fine)").matches){
+      var sigPortrait = sigCard.querySelector(".sig-portrait");
+      var sigRAF = 0;
+      sigCard.addEventListener("mousemove", function(ev){
+        cancelAnimationFrame(sigRAF);
+        sigRAF = requestAnimationFrame(function(){
+          var r = sigCard.getBoundingClientRect();
+          var px = (ev.clientX - r.left) / r.width;
+          var py = (ev.clientY - r.top) / r.height;
+          sigCard.style.setProperty("--mx", (px*100).toFixed(1) + "%");
+          sigCard.style.setProperty("--my", (py*100).toFixed(1) + "%");
+          if(sigPortrait){
+            var xv = (px - .5) * 2;
+            var yv = (py - .5) * 2;
+            sigPortrait.style.transform = "perspective(1400px) rotateY(" + (xv*5).toFixed(2) + "deg) rotateX(" + (-yv*3.5).toFixed(2) + "deg)";
+          }
+        });
+      });
+      sigCard.addEventListener("mouseleave", function(){
+        if(sigPortrait) sigPortrait.style.transform = "perspective(1400px) rotateY(0deg) rotateX(0deg)";
+      });
+    }
+  }
+
   /* ---- year ---- */
   document.getElementById("year").textContent = new Date().getFullYear();
 })();
