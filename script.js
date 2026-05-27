@@ -53,7 +53,7 @@
       +   '<h3>'+ p.addr +'</h3>'
       +   '<p class="meta">'+ p.bed +' Bed &middot; '+ p.bath +' Bath &middot; '+ p.sqft +' Sq Ft</p>'
       +   '<div class="prop-foot">'
-      +     '<span class="prop-price">Starting at<b>$1,000,000</b></span>'
+      +     '<span class="prop-cta">View Details</span>'
       +     '<span class="prop-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>'
       +   '</div>'
       + '</div>';
