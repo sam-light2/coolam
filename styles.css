@@ -183,7 +183,7 @@ section{scroll-margin-top:84px;}
   .hero-visual{width:56vw;max-width:1200px;}
 }
 .hero-house{
-  position:relative;z-index:2;width:100%;height:auto;display:block;
+  position:relative;z-index:2;width:120%;height:auto;display:block;
   filter:drop-shadow(0 38px 58px rgba(0,0,0,.55)) drop-shadow(0 10px 18px rgba(0,0,0,.35));
   transition:transform .7s var(--ease), filter .7s var(--ease);
   will-change:transform;
@@ -195,8 +195,8 @@ section{scroll-margin-top:84px;}
   position:absolute;left:50%;top:50%;transform:translate(-50%,-30%);
   width:120%;height:130%;z-index:1;pointer-events:none;
   background:
-    radial-gradient(ellipse 55% 45% at 50% 78%, rgba(232,184,116,.55) 0%, rgba(196,154,94,.28) 32%, transparent 62%),
-    radial-gradient(ellipse 70% 55% at 60% 45%, rgba(212,162,98,.32) 0%, rgba(168,118,68,.14) 38%, transparent 70%);
+    radial-gradient(ellipse 55% 45% at 50% 78%, rgba(232,184,116,.85) 0%, rgba(196,154,94,.5) 32%, transparent 75%),
+    radial-gradient(ellipse 70% 55% at 60% 45%, rgba(212,162,98,.6) 0%, rgba(168,118,68,.3) 38%, transparent 85%);
   filter:blur(40px);
   animation:driveway 7s ease-in-out infinite;
 }
