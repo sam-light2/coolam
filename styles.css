@@ -175,12 +175,12 @@ section{scroll-margin-top:84px;}
 }
 @media(min-width:920px){
   .hero-visual{
-    position:absolute;right:calc(var(--gutter) * -0.6);bottom:-3vw;
-    width:52vw;max-width:920px;margin-top:0;justify-content:flex-end;
+    position:absolute;right:calc(var(--gutter) * -1.4);bottom:-4vw;
+    width:60vw;max-width:1080px;margin-top:0;justify-content:flex-end;
   }
 }
 @media(min-width:1400px){
-  .hero-visual{width:48vw;max-width:1000px;}
+  .hero-visual{width:56vw;max-width:1200px;}
 }
 .hero-house{
   position:relative;z-index:2;width:100%;height:auto;display:block;
