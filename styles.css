@@ -164,7 +164,37 @@ section{scroll-margin-top:84px;}
 .hero-shaft.s1{right:22%;}
 .hero-shaft.s2{right:9%;opacity:.7;}
 
-.hero-inner{position:relative;width:100%;}
+.hero-inner{position:relative;width:100%;display:grid;grid-template-columns:1fr;gap:clamp(2.5rem,5vw,3.5rem);align-items:center;}
+@media(min-width:920px){
+  .hero-inner{grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);gap:clamp(1.5rem,3vw,3rem);}
+}
+.hero-copy{position:relative;z-index:2;}
+
+/* right column: cutout house anchored with a warm driveway glow */
+.hero-visual{position:relative;z-index:1;display:flex;align-items:flex-end;justify-content:center;min-width:0;}
+@media(min-width:920px){.hero-visual{margin-right:calc(var(--gutter) * -0.4);}}
+.hero-house{
+  position:relative;z-index:2;width:100%;max-width:680px;height:auto;display:block;
+  filter:drop-shadow(0 26px 38px rgba(0,0,0,.45));
+  transition:transform .7s var(--ease), filter .7s var(--ease);
+  will-change:transform;
+}
+.hero-house:hover{transform:translateY(-6px) scale(1.012);filter:drop-shadow(0 34px 48px rgba(0,0,0,.5));}
+/* warm radial glow at the base, simulating a lit driveway */
+.hero-house-glow{
+  position:absolute;left:50%;bottom:0;transform:translate(-50%,34%);
+  width:92%;height:42%;z-index:1;pointer-events:none;
+  background:radial-gradient(ellipse at center, rgba(224,176,110,.6) 0%, rgba(196,154,94,.28) 38%, rgba(168,90,58,.10) 60%, transparent 74%);
+  filter:blur(34px);
+  animation:driveway 6s ease-in-out infinite;
+}
+@keyframes driveway{0%,100%{opacity:.85;}50%{opacity:1;}}
+/* gentle continuous float for life */
+@media(min-width:920px) and (prefers-reduced-motion:no-preference){
+  .hero-house{animation:houseFloat 9s ease-in-out infinite;}
+  @keyframes houseFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  .hero-house:hover{animation-play-state:paused;}
+}
 .hero-eyebrow{color:var(--gold);}
 .hero-eyebrow::before{background:var(--gold);opacity:.8;}
 .hero h1{
