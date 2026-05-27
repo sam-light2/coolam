@@ -226,19 +226,19 @@ section{scroll-margin-top:84px;}
 .about-story .eyebrow::before{background:var(--gold);opacity:.85;}
 
 /* headline */
-.about-story-head{max-width:24ch;}
+.about-story-head{max-width:none;}
 .about-story-head h2{
-  margin:1rem 0 0;font-family:"Fraunces",serif;font-weight:340;
-  font-size:clamp(2.1rem,1.3rem+2.8vw,3.5rem);line-height:1.06;letter-spacing:-.018em;color:var(--paper-on-dark);
-  text-wrap:balance;text-shadow:0 1px 26px rgba(10,12,7,.4);
+  margin:1rem 0 0;font-family:"Fraunces",serif;font-weight:360;
+  font-size:clamp(1.9rem,1.2rem+2.2vw,2.9rem);line-height:1.08;letter-spacing:-.015em;color:var(--paper-on-dark);
+  text-shadow:0 1px 26px rgba(10,12,7,.4);
 }
+@media(min-width:680px){.about-story-head h2{white-space:nowrap;}}
 
-/* paragraphs sit below the headline, balanced two-up on desktop */
+/* single founding paragraph below the headline */
 .about-narrative{
-  margin-top:clamp(2.5rem,5vw,4rem);display:grid;grid-template-columns:1fr;gap:1.4rem;max-width:64ch;
+  margin-top:clamp(1.75rem,3.5vw,2.75rem);max-width:68ch;
 }
-@media(min-width:820px){.about-narrative{grid-template-columns:1fr 1fr;column-gap:clamp(3rem,5vw,5rem);row-gap:0;max-width:none;}}
-.about-narrative p{margin:0;color:var(--paper-on-dark);opacity:.95;line-height:1.72;font-size:clamp(1.02rem,.98rem+.25vw,1.18rem);}
+.about-narrative p{margin:0;color:var(--paper-on-dark);opacity:.95;line-height:1.72;font-size:clamp(1.05rem,1rem+.35vw,1.28rem);}
 
 /* ---- stats: open hairline-divided row, light over image ---- */
 .about-stats{
@@ -334,12 +334,12 @@ section{scroll-margin-top:84px;}
 /* ============================================================
    TEAM
    ============================================================ */
-.team{padding-block:var(--sec-pad);}
+.team{padding-block:var(--sec-pad) clamp(3rem,6vw,5rem);}
 .team-head{max-width:48ch;}
 .team-head h2{margin:.4rem 0 0;font-family:"Fraunces",serif;font-weight:360;font-size:clamp(2rem,1.3rem+2.4vw,3.2rem);line-height:1.05;color:var(--ink);letter-spacing:-.015em;}
 .team-head h2 em{font-style:italic;color:var(--clay);}
 
-.team-grid{margin-top:clamp(2.5rem,5vw,3.5rem);display:grid;gap:1.5rem;grid-template-columns:1fr;}
+.team-grid{margin-top:clamp(2.5rem,5vw,3.5rem);display:grid;gap:1.75rem;grid-template-columns:1fr;}
 @media(min-width:780px){.team-grid{grid-template-columns:repeat(2,1fr);}}
 .member{
   background:var(--cream);border:1px solid var(--sand);border-radius:var(--r-lg);overflow:hidden;
@@ -347,15 +347,15 @@ section{scroll-margin-top:84px;}
 }
 .member:hover{transform:translateY(-5px);box-shadow:var(--shadow-soft);}
 .member-row{display:flex;gap:0;align-items:stretch;}
-.member-portrait{flex:none;width:38%;min-width:150px;position:relative;overflow:hidden;background:var(--sand);}
+.member-portrait{flex:none;width:44%;min-width:175px;position:relative;overflow:hidden;background:var(--sand);}
 .member-portrait .pp{position:absolute;inset:0;}
 .member-portrait .pp::before{content:"";position:absolute;inset:0;background:linear-gradient(165deg,var(--c1),var(--c2));}
 .member-portrait svg{position:absolute;inset:0;width:100%;height:100%;}
-.member-text{padding:clamp(1.8rem,2.8vw,2.6rem);display:flex;flex-direction:column;justify-content:center;}
-.member-text .role{font-size:.74rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--clay);}
-.member-text h3{margin:.7rem 0 .25rem;font-family:"Fraunces",serif;font-weight:480;font-size:clamp(1.7rem,1.2rem+1vw,2.1rem);color:var(--ink);letter-spacing:-.01em;}
-.member-text .tenure{font-size:.84rem;letter-spacing:.01em;color:var(--stone);margin-bottom:1.1rem;white-space:nowrap;}
-.member-text p{margin:0;font-size:1.04rem;color:var(--ink-soft);line-height:1.65;}
+.member-text{padding:clamp(2rem,3vw,3rem);display:flex;flex-direction:column;justify-content:center;}
+.member-text .role{font-size:.78rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--clay);}
+.member-text h3{margin:.8rem 0 .3rem;font-family:"Fraunces",serif;font-weight:480;font-size:clamp(1.85rem,1.3rem+1.2vw,2.4rem);color:var(--ink);letter-spacing:-.01em;}
+.member-text .tenure{font-size:.88rem;letter-spacing:.01em;color:var(--stone);margin-bottom:1.25rem;white-space:nowrap;}
+.member-text p{margin:0;font-size:clamp(1.05rem,1rem+.3vw,1.18rem);color:var(--ink-soft);line-height:1.68;}
 
 /* ============================================================
    CONTACT
@@ -501,6 +501,10 @@ section{scroll-margin-top:84px;}
 /* focus visibility */
 a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--clay);outline-offset:3px;border-radius:4px;}
 .site-header:not(.scrolled) a:focus-visible,.hero a:focus-visible{outline-color:var(--gold);}
+/* keep the pill CTA round on focus so the ring matches its shape */
+.nav-cta{border-radius:100px;}
+.nav-cta:focus-visible{outline:2px solid var(--clay);outline-offset:3px;border-radius:100px;}
+.site-header:not(.scrolled) .nav-cta:focus-visible{outline-color:var(--gold);}
 
 /* ============================================================
    REAL PHOTO LAYERS (drop over CSS placeholders; fall back gracefully)
@@ -512,7 +516,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 /* keep the duplex tag above any photo */
 .ph-tag{z-index:3;}
 /* team headshots */
-.member-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;z-index:1;}
+.member-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 22%;z-index:1;}
 
 /* ---- unify portfolio photos: normalize white balance / exposure, then a
    consistent brand-tone grade so cool and warm shots read as one set ---- */
