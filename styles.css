@@ -175,7 +175,7 @@ section{scroll-margin-top:84px;}
 }
 @media(min-width:920px){
   .hero-visual{
-    position:absolute;right:calc(var(--gutter) * -1.4);bottom:-4vw;
+    position:absolute;right:calc(var(--gutter) * -2.2);bottom:-8vw;
     width:60vw;max-width:1080px;margin-top:0;justify-content:flex-end;
   }
 }
