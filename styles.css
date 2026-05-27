@@ -168,10 +168,21 @@ section{scroll-margin-top:84px;}
 .hero-copy {
   position: relative;
   z-index: 3;
-  /* Push it to the far left of its container */
-  margin-right: auto;
-  /* Cap the width so it doesn't stretch too far on wide screens */
   max-width: 580px; 
+}
+
+/* Force the text block further left on desktop screens */
+@media (min-width: 920px) {
+  .hero-copy {
+    margin-left: -3rem; /* Pulls it to the left into the gutter */
+  }
+}
+
+/* Pull it even further left on extra-wide screens */
+@media (min-width: 1400px) {
+  .hero-copy {
+    margin-left: -6rem; 
+  }
 }
 .hero-visual{
   position:relative;z-index:1;display:flex;align-items:flex-end;justify-content:center;min-width:0;
