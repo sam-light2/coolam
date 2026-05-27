@@ -103,9 +103,14 @@ section{scroll-margin-top:84px;}
 .site-header:not(.scrolled) .brand .word span{color:var(--muted-on-dark);}
 .site-header:not(.scrolled) .brand .mark{color:var(--gold);}
 
+@media (min-width: 920px) {
+  .nav-links {
+    margin-right: -2rem; /* Increase to -4rem etc. to pull it further right */
+  }
+}
 .nav-links{display:flex;align-items:center;gap:2.2rem;}
 .nav-links a{
-  font-size: .9rem;font-weight:500;letter-spacing:.04em;color:var(--ink-soft);position:relative;padding:.4rem 0;
+  font-size: .95rem;font-weight:500;letter-spacing:.04em;color:var(--ink-soft);position:relative;padding:.4rem 0;
   transition:color .3s var(--ease);
 }
 .site-header:not(.scrolled) .nav-links a{color:var(--paper-on-dark);}
@@ -190,7 +195,7 @@ section{scroll-margin-top:84px;}
 }
 @media(min-width:920px){
   .hero-visual{
-    position:absolute;right:calc(var(--gutter) * -3.5);bottom:-8vw;
+    position:absolute;right:calc(var(--gutter) * -4.5);bottom:-8vw;
     width:65vw; /* Increased */
     max-width:1300px; /* Raised the cap significantly */
     margin-top:0;justify-content:flex-end;
