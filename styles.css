@@ -165,10 +165,14 @@ section{scroll-margin-top:84px;}
 .hero-shaft.s2{right:9%;opacity:.7;}
 
 .hero-inner{position:relative;width:100%;}
-.hero-copy{position:relative;z-index:3;max-width:none;}
-
-/* House anchored bottom-right, much larger, with strong warm anchor glow.
-   On desktop it bleeds toward the right edge and the copy overlaps it. */
+.hero-copy {
+  position: relative;
+  z-index: 3;
+  /* Push it to the far left of its container */
+  margin-right: auto;
+  /* Cap the width so it doesn't stretch too far on wide screens */
+  max-width: 580px; 
+}
 .hero-visual{
   position:relative;z-index:1;display:flex;align-items:flex-end;justify-content:center;min-width:0;
   margin-top:2.5rem;
