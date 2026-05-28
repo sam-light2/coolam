@@ -1,153 +1,238 @@
 /* ============================================================
-   COOLAM DEVELOPMENT, interactions
+   [Your Name] — Portfolio
+   Vanilla JS: cursor, scroll reveals, hover states, year stamp
    ============================================================ */
-(function(){
-  "use strict";
-  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* ---- property data ---- */
-  var palettes = [
-    {p1:"#7d8a5e",p2:"#4a563a",p3:"#2a3122"},
-    {p1:"#b27e54",p2:"#7a4e30",p3:"#3b2418"},
-    {p1:"#9a8f6e",p2:"#6a6147",p3:"#34301f"},
-    {p1:"#6f7d6a",p2:"#445040",p3:"#262e23"}
-  ];
-  var props = [
-    {addr:"3928 Hawthorn Ave", sqft:"3,498", bed:"3", bath:"3.5", pi:0, img:"3928.webp"},
-    {addr:"3930 Hawthorn Ave", sqft:"3,465", bed:"3", bath:"3.5", pi:1, img:"3930.webp"},
-    {addr:"4030 Hawthorn Ave", sqft:"3,218", bed:"3", bath:"3.5", pi:2, img:"4030.jpeg"},
-    {addr:"4032 Hawthorn Ave", sqft:"3,140", bed:"3", bath:"3.5", pi:3, img:"4032.jpeg"}
-  ];
+(() => {
+  'use strict';
 
-  /* art-directed CSS placeholder (renders behind the real photo) */
-  function phMarkup(pi){
-    var c = palettes[pi];
-    return '<div class="img" style="--p1:'+c.p1+';--p2:'+c.p2+';--p3:'+c.p3+'">'
-      + '<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">'
-      +   '<g stroke="rgba(247,240,224,.28)" stroke-width="1" fill="none">'
-      +     '<line x1="250" y1="20" x2="250" y2="240"/><line x1="300" y1="20" x2="300" y2="240"/>'
-      +     '<line x1="350" y1="40" x2="350" y2="240"/>'
-      +     '<line x1="235" y1="70" x2="400" y2="70"/><line x1="235" y1="155" x2="400" y2="155"/>'
-      +   '</g>'
-      +   '<rect x="40" y="150" width="120" height="90" rx="4" fill="rgba(247,240,224,.12)"/>'
-      + '</svg>'
-      + '<div class="ph-grain"></div><div class="floor"></div>'
-      + '</div>';
+  const isTouch = matchMedia('(hover: none)').matches;
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* --------------------------------------------------------
+     Nav theme: now dark-by-default (set in HTML) because the
+     new marquee hero has a light background. The previous
+     light-over-photo observer is no longer needed.
+     -------------------------------------------------------- */
+  const nav = document.querySelector('.nav');
+  if (nav) nav.classList.add('nav--dark');
+
+  /* --------------------------------------------------------
+     Custom cursor (skipped on touch devices)
+     -------------------------------------------------------- */
+  const cursor = document.querySelector('.cursor');
+
+  if (cursor && !isTouch) {
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let curX = mouseX;
+    let curY = mouseY;
+    let rafId = null;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    }, { passive: true });
+
+    const tick = () => {
+      // Smooth easing toward mouse
+      curX += (mouseX - curX) * 0.22;
+      curY += (mouseY - curY) * 0.22;
+      cursor.style.transform = `translate3d(${curX}px, ${curY}px, 0) translate(-50%, -50%)`;
+      rafId = requestAnimationFrame(tick);
+    };
+    tick();
+
+    // Hide cursor when leaving window
+    document.addEventListener('mouseleave', () => {
+      cursor.style.opacity = '0';
+    });
+    document.addEventListener('mouseenter', () => {
+      cursor.style.opacity = '1';
+    });
+
+    // Hover state on interactive elements
+    const hoverables = document.querySelectorAll(
+      'a, button, .work__item, .hero__cta'
+    );
+    hoverables.forEach((el) => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('is-hover'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('is-hover'));
+    });
+  } else if (cursor) {
+    cursor.style.display = 'none';
   }
 
-  /* real photo layer; removes itself if the file is missing so the placeholder shows */
-  function photoMarkup(p){
-    return '<img class="ph-photo" src="'+p.img+'" alt="'+p.addr+' duplex exterior" loading="lazy" onerror="this.remove()">';
-  }
+  /* --------------------------------------------------------
+     Scroll reveals via IntersectionObserver
+     -------------------------------------------------------- */
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.12,
+        rootMargin: '0px 0px -8% 0px',
+      }
+    );
 
-  /* build property cards */
-  var grid = document.getElementById("propGrid");
-  props.forEach(function(p, i){
-    var card = document.createElement("button");
-    card.className = "prop-card reveal";
-    card.setAttribute("data-d", String((i % 2) + 1));
-    card.setAttribute("aria-label", p.addr + ", view duplex details");
-    card.innerHTML =
-      '<div class="ph">'+ phMarkup(p.pi) + photoMarkup(p) +'<span class="ph-tag">Duplex</span></div>'
-      + '<div class="prop-info">'
-      +   '<h3>'+ p.addr +'</h3>'
-      +   '<p class="meta">'+ p.bed +' Bed &middot; '+ p.bath +' Bath &middot; '+ p.sqft +' Sq Ft</p>'
-      +   '<div class="prop-foot">'
-      +     '<span class="prop-cta">View Details</span>'
-      +     '<span class="prop-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>'
-      +   '</div>'
-      + '</div>';
-    card.addEventListener("click", function(){ openModal(p); });
-    grid.appendChild(card);
-  });
-
-  /* ---- header scroll state ---- */
-  var header = document.getElementById("header");
-  function onScroll(){
-    if(window.scrollY > 24) header.classList.add("scrolled");
-    else header.classList.remove("scrolled");
-  }
-  onScroll();
-  window.addEventListener("scroll", onScroll, {passive:true});
-
-  /* ---- mobile menu ---- */
-  var toggle = document.getElementById("menuToggle");
-  var navLinks = document.getElementById("navLinks");
-  function closeMenu(){
-    navLinks.classList.remove("open");
-    document.body.classList.remove("nav-open");
-    toggle.setAttribute("aria-expanded","false");
-    toggle.setAttribute("aria-label","Open menu");
-  }
-  toggle.addEventListener("click", function(){
-    var open = navLinks.classList.toggle("open");
-    document.body.classList.toggle("nav-open", open);
-    toggle.setAttribute("aria-expanded", open ? "true" : "false");
-    toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-  });
-  navLinks.querySelectorAll("a").forEach(function(a){
-    a.addEventListener("click", closeMenu);
-  });
-
-  /* ---- reveal on scroll ---- */
-  var reveals = document.querySelectorAll(".reveal");
-  if(reduce || !("IntersectionObserver" in window)){
-    reveals.forEach(function(el){ el.classList.add("in"); });
+    document.querySelectorAll('.reveal, .stagger').forEach((el) => io.observe(el));
   } else {
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); }
+    // No IO — show everything
+    document.querySelectorAll('.reveal, .stagger').forEach((el) => {
+      el.classList.add('is-visible');
+    });
+  }
+
+  /* --------------------------------------------------------
+     Auto-update copyright year
+     -------------------------------------------------------- */
+  document.querySelectorAll('[data-year]').forEach((el) => {
+    el.textContent = new Date().getFullYear();
+  });
+
+  /* --------------------------------------------------------
+     Smooth scroll fallback for anchors (most browsers do this
+     via CSS scroll-behavior, but this guarantees it).
+     -------------------------------------------------------- */
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener('click', (e) => {
+      const targetId = anchor.getAttribute('href');
+      if (!targetId || targetId === '#') return;
+      const target = document.querySelector(targetId);
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({
+        behavior: reduceMotion ? 'auto' : 'smooth',
+        block: 'start',
       });
-    }, {threshold:.16, rootMargin:"0px 0px -8% 0px"});
-    reveals.forEach(function(el){ io.observe(el); });
+    });
+  });
+
+  /* --------------------------------------------------------
+     Whisper text — wrap each word in a span, stagger-reveal
+     on scroll into view. Drop a [data-whisper] attr on any
+     text-only element to opt in.
+     -------------------------------------------------------- */
+  const setupWhisper = (el) => {
+    // Only split if it's pure text (no children we'd lose)
+    if (el.dataset.whisperReady === '1') return;
+    const raw = el.textContent.trim();
+    if (!raw) return;
+
+    const words = raw.split(/\s+/);
+    el.textContent = '';
+    const frag = document.createDocumentFragment();
+    words.forEach((w, i) => {
+      const span = document.createElement('span');
+      span.className = 'whisper-word';
+      span.textContent = w;
+      // staggered delay per word
+      span.style.transitionDelay = `${i * 0.06}s`;
+      frag.appendChild(span);
+    });
+    el.appendChild(frag);
+    el.dataset.whisperReady = '1';
+  };
+
+  const whisperEls = document.querySelectorAll('[data-whisper]');
+  whisperEls.forEach(setupWhisper);
+
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    const whisperIO = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.querySelectorAll('.whisper-word').forEach((w) => {
+              w.classList.add('is-in');
+            });
+            whisperIO.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2, rootMargin: '0px 0px -10% 0px' }
+    );
+    whisperEls.forEach((el) => whisperIO.observe(el));
+  } else {
+    whisperEls.forEach((el) => {
+      el.querySelectorAll('.whisper-word').forEach((w) => w.classList.add('is-in'));
+    });
   }
 
-  /* ---- property modal ---- */
-  var modal = document.getElementById("modal");
-  var lastFocus = null;
-  function openModal(p){
-    lastFocus = document.activeElement;
-    document.getElementById("modalTitle").textContent = p.addr;
-    document.getElementById("mSqft").textContent = p.sqft;
-    document.getElementById("mBed").textContent = p.bed;
-    document.getElementById("mBath").textContent = p.bath;
-    document.getElementById("modalPh").innerHTML = phMarkup(p.pi) + photoMarkup(p);
-    modal.classList.add("open");
-    modal.setAttribute("aria-hidden","false");
-    document.body.classList.add("nav-open");
-    document.getElementById("modalClose").focus();
-  }
-  function closeModal(){
-    modal.classList.remove("open");
-    modal.setAttribute("aria-hidden","true");
-    document.body.classList.remove("nav-open");
-    if(lastFocus) lastFocus.focus();
-  }
-  modal.addEventListener("click", function(e){
-    if(e.target.hasAttribute("data-close") || e.target.closest("[data-close]")) closeModal();
-  });
-  document.getElementById("modalClose").addEventListener("click", closeModal);
-  document.addEventListener("keydown", function(e){
-    if(e.key === "Escape"){
-      if(modal.classList.contains("open")) closeModal();
-      else if(navLinks.classList.contains("open")) closeMenu();
+  /* --------------------------------------------------------
+     Dot cards — count up the value when scrolled into view.
+     Each card uses data-count="<target>" and data-format=
+     "short" | "impressions" | "raw".
+     -------------------------------------------------------- */
+  const formatStat = (n, mode) => {
+    if (mode === 'impressions') {
+      if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(0)}M+`;
+      if (n >= 1_000)     return `${(n / 1_000).toFixed(0)}K`;
+      return String(n);
     }
-  });
+    // "short" — 1.2M / 777K style
+    if (n >= 1_000_000) {
+      const v = n / 1_000_000;
+      return v >= 10 ? `${Math.round(v)}M` : `${v.toFixed(1).replace(/\.0$/, '')}M`;
+    }
+    if (n >= 1_000) {
+      const v = n / 1_000;
+      return v >= 10 ? `${Math.round(v)}K` : `${v.toFixed(1).replace(/\.0$/, '')}K`;
+    }
+    return String(n);
+  };
 
-  /* ---- contact form ---- */
-  var form = document.getElementById("contactForm");
-  var success = document.getElementById("formSuccess");
-  form.addEventListener("submit", function(e){
-    e.preventDefault();
-    if(!form.checkValidity()){ form.reportValidity(); return; }
-    success.classList.add("show");
-  });
-  document.getElementById("resetForm").addEventListener("click", function(){
-    success.classList.remove("show");
-    form.reset();
-    document.getElementById("name").focus();
-  });
+  const animateCount = (el, target, duration, mode) => {
+    const start = performance.now();
+    const tick = (now) => {
+      const elapsed = now - start;
+      const t = Math.min(elapsed / duration, 1);
+      // ease-out cubic
+      const eased = 1 - Math.pow(1 - t, 3);
+      const value = Math.floor(target * eased);
+      el.textContent = formatStat(value, mode);
+      if (t < 1) requestAnimationFrame(tick);
+      else el.textContent = formatStat(target, mode);
+    };
+    requestAnimationFrame(tick);
+  };
 
-  /* ---- year ---- */
-  document.getElementById("year").textContent = new Date().getFullYear();
+  const dotCards = document.querySelectorAll('[data-dot-card]');
+  if (dotCards.length) {
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      dotCards.forEach((card) => {
+        const target = parseInt(card.dataset.count, 10) || 0;
+        const mode   = card.dataset.format || 'short';
+        const valEl  = card.querySelector('[data-dot-value]');
+        if (valEl) valEl.textContent = formatStat(target, mode);
+      });
+    } else {
+      const dotIO = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            const card   = entry.target;
+            const target = parseInt(card.dataset.count, 10) || 0;
+            const mode   = card.dataset.format || 'short';
+            const valEl  = card.querySelector('[data-dot-value]');
+            if (valEl) animateCount(valEl, target, 2000, mode);
+            dotIO.unobserve(card);
+          });
+        },
+        { threshold: 0.3 }
+      );
+      dotCards.forEach((card) => dotIO.observe(card));
+    }
+  }
+
+  /* Carousel removed — hero is now just the centered text stack. */
+
+  /* Hero parallax removed — the marquee is the hero's motion anchor now,
+     and drifting the title in the centered layout pushed it into the desc. */
 })();
