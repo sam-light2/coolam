@@ -785,3 +785,70 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
   content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
   background:rgba(64,58,40,.16);mix-blend-mode:multiply;
 }
+
+/* ============================================================
+   GALLERY — expandable hover row ("Our Latest Creations")
+   ============================================================ */
+.gallery{
+  position:relative;overflow:hidden;
+  background:var(--forest);color:var(--paper-on-dark);
+  padding-block:var(--sec-pad);
+}
+.gallery::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(72% 60% at 14% -12%, rgba(196,154,94,.16), transparent 60%);
+}
+.gallery-head{position:relative;max-width:62ch;}
+.gallery-head .eyebrow{color:var(--gold);}
+.gallery-head .eyebrow::before{background:var(--gold);}
+.gallery-head h2{
+  margin:.4rem 0 0;font-family:"Fraunces",serif;font-weight:360;
+  font-size:clamp(2rem,1.3rem+2.4vw,3.2rem);line-height:1.05;color:var(--paper-on-dark);letter-spacing:-.015em;
+}
+.gallery-head h2 em{font-style:italic;color:var(--gold);}
+.gallery-head p{margin:1rem 0 0;color:var(--muted-on-dark);max-width:54ch;}
+
+.gallery-row{
+  position:relative;margin-top:clamp(2.5rem,5vw,3.5rem);
+  display:flex;gap:.6rem;height:clamp(22rem,42vw,30rem);
+}
+/* each tile shares the row equally, then expands toward full width on hover —
+   width acts as the flex-basis, so the transition mirrors the source component */
+.gallery-item{
+  position:relative;flex-grow:1;width:14rem;min-width:0;height:100%;
+  border-radius:var(--r);overflow:hidden;background:var(--forest-soft);
+  border:1px solid var(--forest-line);
+  transition:width .6s var(--ease), border-color .6s var(--ease), box-shadow .6s var(--ease);
+}
+.gallery-item:hover{width:100%;border-color:var(--gold);box-shadow:var(--shadow-lift);}
+/* brand grade so these read as one set with the portfolio photos */
+.gallery-photo{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;
+  filter:saturate(.82) contrast(1.04) brightness(.9) sepia(.1) hue-rotate(-8deg);
+  transition:filter .7s var(--ease), transform 1s var(--ease);
+}
+.gallery-item:hover .gallery-photo{
+  filter:saturate(.9) contrast(1.05) brightness(1) sepia(.06) hue-rotate(-8deg);
+  transform:scale(1.04);
+}
+.gallery-item::after{
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg, rgba(20,23,15,0) 48%, rgba(15,17,10,.6) 100%);
+}
+.gallery-index{
+  position:absolute;left:1.1rem;bottom:.9rem;z-index:2;
+  font-family:"Fraunces",serif;font-style:italic;font-size:1.1rem;color:var(--gold);
+  opacity:0;transform:translateY(8px);
+  transition:opacity .5s var(--ease), transform .5s var(--ease);
+  text-shadow:0 1px 12px rgba(0,0,0,.55);
+}
+.gallery-item:hover .gallery-index{opacity:1;transform:none;}
+
+/* touch / narrow screens: the hover-to-expand interaction doesn't apply —
+   fall back to a clean two-up grid with every tile fully visible */
+@media(max-width:780px){
+  .gallery-row{height:auto;display:grid;grid-template-columns:repeat(2,1fr);gap:.7rem;}
+  .gallery-item{width:auto;height:auto;aspect-ratio:4/5;}
+  .gallery-item:hover{width:auto;}
+  .gallery-index{opacity:1;transform:none;}
+}
