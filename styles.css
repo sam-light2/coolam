@@ -835,14 +835,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
   content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
   background:linear-gradient(180deg, rgba(20,23,15,0) 48%, rgba(15,17,10,.6) 100%);
 }
-.gallery-index{
-  position:absolute;left:1.1rem;bottom:.9rem;z-index:2;
-  font-family:"Fraunces",serif;font-style:italic;font-size:1.1rem;color:var(--gold);
-  opacity:0;transform:translateY(8px);
-  transition:opacity .5s var(--ease), transform .5s var(--ease);
-  text-shadow:0 1px 12px rgba(0,0,0,.55);
-}
-.gallery-item:hover .gallery-index{opacity:1;transform:none;}
 
 /* touch / narrow screens: the hover-to-expand interaction doesn't apply —
    fall back to a clean two-up grid with every tile fully visible */
