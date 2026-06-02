@@ -806,11 +806,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
   font-size:clamp(2rem,1.3rem+2.4vw,3.2rem);line-height:1.05;color:var(--paper-on-dark);letter-spacing:-.015em;
 }
 .gallery-head h2 em{font-style:italic;color:var(--gold);}
-.gallery-head p{margin:1rem 0 0;color:var(--muted-on-dark);max-width:54ch;}
 
 .gallery-row{
-  position:relative;margin-top:clamp(2.5rem,5vw,3.5rem);
-  display:flex;gap:.6rem;height:clamp(22rem,42vw,30rem);
+  position:relative;margin-top:clamp(1.5rem,3vw,2rem);
+  display:flex;gap:.6rem;height:clamp(26rem,48vw,36rem);
 }
 /* each tile shares the row equally, then expands toward full width on hover —
    width acts as the flex-basis, so the transition mirrors the source component */
