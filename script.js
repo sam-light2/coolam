@@ -7,10 +7,10 @@
 
   /* ---- property data ---- */
   var palettes = [
-    {p1:"#7d8a5e",p2:"#4a563a",p3:"#2a3122"},
-    {p1:"#b27e54",p2:"#7a4e30",p3:"#3b2418"},
-    {p1:"#9a8f6e",p2:"#6a6147",p3:"#34301f"},
-    {p1:"#6f7d6a",p2:"#445040",p3:"#262e23"}
+    {p1:"#4f9e7e",p2:"#2f6b54",p3:"#163026"},
+    {p1:"#5aa98a",p2:"#357a60",p3:"#19342a"},
+    {p1:"#6f9e8c",p2:"#3f7a66",p3:"#14241f"},
+    {p1:"#4a8f76",p2:"#2c6450",p3:"#122b22"}
   ];
   var props = [
     {addr:"3928 Hawthorn Ave", sqft:"3,498", bed:"3", bath:"3.5", pi:0, img:"3928.webp"},
@@ -24,12 +24,12 @@
     var c = palettes[pi];
     return '<div class="img" style="--p1:'+c.p1+';--p2:'+c.p2+';--p3:'+c.p3+'">'
       + '<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">'
-      +   '<g stroke="rgba(247,240,224,.28)" stroke-width="1" fill="none">'
+      +   '<g stroke="rgba(230,241,236,.28)" stroke-width="1" fill="none">'
       +     '<line x1="250" y1="20" x2="250" y2="240"/><line x1="300" y1="20" x2="300" y2="240"/>'
       +     '<line x1="350" y1="40" x2="350" y2="240"/>'
       +     '<line x1="235" y1="70" x2="400" y2="70"/><line x1="235" y1="155" x2="400" y2="155"/>'
       +   '</g>'
-      +   '<rect x="40" y="150" width="120" height="90" rx="4" fill="rgba(247,240,224,.12)"/>'
+      +   '<rect x="40" y="150" width="120" height="90" rx="4" fill="rgba(230,241,236,.12)"/>'
       + '</svg>'
       + '<div class="ph-grain"></div><div class="floor"></div>'
       + '</div>';
