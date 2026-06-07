@@ -312,55 +312,64 @@ section{scroll-margin-top:84px;}
    ============================================================ */
 .about{position:relative;}
 
-/* ---- story + stats band: kitchen photo background, dark overlay ---- */
+/* ---- story: editorial split — dark copy panel + clean feature photo ---- */
 .about-story{
-  position:relative;isolation:isolate;overflow:hidden;
+  display:grid;grid-template-columns:1fr;align-items:stretch;
   background:var(--forest);color:var(--paper-on-dark);
-  min-height:clamp(40rem,82vh,58rem);display:flex;align-items:center;
-  padding-block:clamp(5rem,11vw,9rem);
+  overflow:hidden;isolation:isolate;
 }
-.about-story-bg{
-  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 55%;z-index:-2;
+@media(min-width:900px){
+  .about-story{grid-template-columns:1.04fr 1fr;}
 }
-.about-story-overlay{
-  position:absolute;inset:0;z-index:-1;
-  background:
-    linear-gradient(180deg, rgba(8,16,13,.72) 0%, rgba(8,16,13,.5) 45%, rgba(8,15,12,.74) 100%),
-    rgba(12,22,18,.55);
+
+.about-story-panel{
+  display:flex;align-items:center;
+  padding:clamp(3.5rem,8vw,7rem) var(--gutter);
 }
-.about-story-inner{position:relative;width:100%;}
+@media(min-width:900px){
+  /* line the copy up with the site's container edge, leaving air before the photo */
+  .about-story-panel{
+    padding-left:max(var(--gutter), calc((100vw - var(--maxw)) / 2 + var(--gutter)));
+    padding-right:clamp(2.5rem,4vw,4.5rem);
+  }
+}
+.about-story-inner{width:100%;max-width:40rem;}
 .about-story .eyebrow{color:var(--gold);}
 .about-story .eyebrow::before{background:var(--gold);opacity:.85;}
 
-/* headline */
-.about-story-head{max-width:none;}
 .about-story-head h2{
   margin:1rem 0 0;font-family:"Fraunces",serif;font-weight:360;
-  font-size:clamp(1.9rem,1.2rem+2.2vw,2.9rem);line-height:1.08;letter-spacing:-.015em;color:var(--paper-on-dark);
-  text-shadow:0 1px 26px rgba(7,14,11,.4);
+  font-size:clamp(2rem,1.2rem+2.4vw,3rem);line-height:1.06;letter-spacing:-.015em;color:var(--paper-on-dark);
 }
-@media(min-width:680px){.about-story-head h2{white-space:nowrap;}}
+.about-narrative{margin-top:clamp(1.5rem,3vw,2.25rem);}
+.about-narrative p{margin:0;color:var(--paper-on-dark);opacity:.92;line-height:1.72;font-size:clamp(1.05rem,1rem+.35vw,1.22rem);}
 
-/* single founding paragraph below the headline */
-.about-narrative{
-  margin-top:clamp(1.75rem,3.5vw,2.75rem);max-width:68ch;
-}
-.about-narrative p{margin:0;color:var(--paper-on-dark);opacity:.95;line-height:1.72;font-size:clamp(1.05rem,1rem+.35vw,1.28rem);}
-
-/* ---- stats: open hairline-divided row, light over image ---- */
+/* stats: 2x2 hairline grid inside the panel */
 .about-stats{
-  margin-top:clamp(3rem,6vw,4.5rem);padding-top:clamp(2.25rem,4vw,3rem);
-  border-top:1px solid rgba(230,241,236,.26);
-  display:grid;grid-template-columns:repeat(2,1fr);gap:2rem 1.5rem;
+  margin-top:clamp(2.5rem,5vw,3.5rem);
+  display:grid;grid-template-columns:1fr 1fr;
 }
-@media(min-width:760px){.about-stats{grid-template-columns:repeat(4,1fr);gap:0;}}
-@media(min-width:760px){
-  .astat{padding:.25rem clamp(1rem,2.4vw,2.4rem);}
-  .astat:first-child{padding-left:0;}
-  .astat + .astat{border-left:1px solid rgba(230,241,236,.22);}
+.astat{padding:clamp(1.15rem,2.2vw,1.55rem) 0;border-top:1px solid rgba(230,241,236,.16);}
+.astat:nth-child(2n+1){padding-right:clamp(1.25rem,2.4vw,2rem);}
+.astat:nth-child(2n){border-left:1px solid rgba(230,241,236,.16);padding-left:clamp(1.25rem,2.4vw,2rem);}
+.astat b{display:block;font-family:"Fraunces",serif;font-weight:420;font-size:clamp(1.55rem,1rem+1.4vw,2.15rem);color:var(--paper-on-dark);line-height:1.05;letter-spacing:-.01em;text-wrap:balance;}
+.astat span{display:block;margin-top:.5rem;font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(230,241,236,.78);font-weight:600;}
+
+/* feature photo — shown clean, melts into the panel at the seam */
+.about-story-media{position:relative;min-height:clamp(18rem,60vw,26rem);}
+@media(min-width:900px){.about-story-media{min-height:0;}}
+.about-story-photo{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;
+  filter:saturate(.92) contrast(1.03);
 }
-.astat b{display:block;font-family:"Fraunces",serif;font-weight:420;font-size:clamp(1.7rem,1.05rem+1.6vw,2.4rem);color:var(--paper-on-dark);line-height:1.05;letter-spacing:-.01em;text-wrap:balance;}
-.astat span{display:block;margin-top:.55rem;font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(230,241,236,.82);font-weight:600;}
+.about-story-media::before{
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(90deg, var(--forest), rgba(21,36,31,0) 16%);
+}
+@media(max-width:899px){
+  .about-story-media{order:-1;}
+  .about-story-media::before{background:linear-gradient(180deg, rgba(21,36,31,0) 72%, var(--forest));}
+}
 
 /* ---- 4. foundation (pillars) ---- */
 .about-foundation{
@@ -557,11 +566,11 @@ section{scroll-margin-top:84px;}
    ============================================================ */
 .site-footer{background:var(--ink);color:var(--paper-on-dark);padding-block:clamp(3.5rem,7vw,5.5rem) clamp(1.8rem,3vw,2.5rem);}
 .footer-top{display:grid;gap:2.5rem;grid-template-columns:1fr;align-items:start;}
-@media(min-width:760px){.footer-top{grid-template-columns:1.4fr 1fr 1fr;gap:3rem;}}
+@media(min-width:760px){.footer-top{grid-template-columns:1.6fr 1fr;gap:3rem;}}
 .footer-brand .word b{color:var(--paper-on-dark);font-size:1.5rem;}
 .footer-brand .word span{color:var(--muted-on-dark);}
 .footer-brand .mark{color:var(--gold);width:40px;height:40px;}
-.footer-brand p{margin:1.4rem 0 0;color:var(--muted-on-dark);max-width:34ch;font-size:.95rem;line-height:1.6;}
+.footer-brand p{margin:1.4rem 0 0;color:var(--muted-on-dark);max-width:34ch;font-size:.95rem;line-height:1.6;padding-left:0;margin-left:0;}
 .footer-col h4{margin:0 0 1.1rem;font-size:.72rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);}
 .footer-col ul{list-style:none;margin:0;padding:0;display:grid;gap:.7rem;}
 .footer-col a,.footer-col li{color:var(--muted-on-dark);font-size:.95rem;transition:color .3s var(--ease);}
