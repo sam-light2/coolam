@@ -166,13 +166,7 @@
           + '</article>';
       }).join("");
 
-      phaseEl.innerHTML =
-        '<div class="up-phase-head">'
-        +   '<h3>'+ phase.group +'</h3>'
-        +   '<span class="status-pill is-'+phase.status+'">'+ meta.label +'</span>'
-        + '</div>'
-        + '<p class="up-phase-note">'+ phase.note +'</p>'
-        + '<div class="up-grid">'+ cards +'</div>';
+      phaseEl.innerHTML = '<div class="up-grid">'+ cards +'</div>';
       upWrap.appendChild(phaseEl);
     });
   }
