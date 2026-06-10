@@ -19,6 +19,12 @@
     {addr:"4032 Hawthorn Ave", sqft:"3,140", bed:"3", bath:"3.5", pi:3, img:"4032.jpeg"}
   ];
 
+  /* six-plex collection: two three-unit buildings, every unit sold */
+  var plexes = [
+    {addr:"3939 Hawthorn Ave", units:["A","B","C"], pi:0, img:"3939.webp"},
+    {addr:"3943 Hawthorn Ave", units:["A","B","C"], pi:2, img:"3943.webp"}
+  ];
+
   /* art-directed CSS placeholder (renders behind the real photo) */
   function phMarkup(pi){
     var c = palettes[pi];
@@ -37,7 +43,7 @@
 
   /* real photo layer; removes itself if the file is missing so the placeholder shows */
   function photoMarkup(p){
-    return '<img class="ph-photo" src="'+p.img+'" alt="'+p.addr+' duplex exterior" loading="lazy" onerror="this.remove()">';
+    return '<img class="ph-photo" src="'+p.img+'" alt="'+p.addr+' exterior" loading="lazy" onerror="this.remove()">';
   }
 
   /* build property cards */
@@ -46,9 +52,12 @@
     var card = document.createElement("button");
     card.className = "prop-card reveal";
     card.setAttribute("data-d", String((i % 2) + 1));
-    card.setAttribute("aria-label", p.addr + ", view duplex details");
+    card.setAttribute("aria-label", p.addr + ", sold duplex, view details");
     card.innerHTML =
-      '<div class="ph">'+ phMarkup(p.pi) + photoMarkup(p) +'<span class="ph-tag">Duplex</span></div>'
+      '<div class="ph">'+ phMarkup(p.pi) + photoMarkup(p)
+      +   '<span class="ph-tag">Duplex</span>'
+      +   '<span class="ph-status is-sold">Sold</span>'
+      + '</div>'
       + '<div class="prop-info">'
       +   '<h3>'+ p.addr +'</h3>'
       +   '<p class="meta">'+ p.bed +' Bed &middot; '+ p.bath +' Bath &middot; '+ p.sqft +' Sq Ft</p>'
@@ -60,6 +69,113 @@
     card.addEventListener("click", function(){ openModal(p); });
     grid.appendChild(card);
   });
+
+  /* build six-plex building cards (informational, every unit sold) */
+  var plexGrid = document.getElementById("plexGrid");
+  if(plexGrid){
+    plexes.forEach(function(b, i){
+      var chips = b.units.map(function(u){
+        return '<span class="unit-chip"><span>Unit '+u+'</span><b>Sold</b></span>';
+      }).join("");
+      var photo = '<img class="ph-photo" src="'+b.img+'" alt="'+b.addr+' six-plex building" loading="lazy" onerror="this.remove()">';
+      var card = document.createElement("article");
+      card.className = "plex-card reveal";
+      card.setAttribute("data-d", String((i % 2) + 1));
+      card.innerHTML =
+        '<div class="ph">'+ phMarkup(b.pi) + photo
+        +   '<span class="ph-tag">Six-Plex Development</span>'
+        +   '<span class="ph-status is-sold">Sold Out</span>'
+        + '</div>'
+        + '<div class="prop-info">'
+        +   '<h3>'+ b.addr +'</h3>'
+        +   '<p class="meta">Three residences &middot; Units A, B &amp; C</p>'
+        +   '<div class="unit-row">'+ chips +'</div>'
+        + '</div>';
+      plexGrid.appendChild(card);
+    });
+  }
+
+  /* ---- upcoming / in-development pipeline ---- */
+  var upcoming = [
+    {
+      group:"Nearly Complete", status:"soon",
+      note:"Final finishes underway — these homes are nearing completion.",
+      items:[
+        {addr:"4128 Prescott Ave", kind:"Two-Story Duplex", pi:1, img:"4128.webp"},
+        {addr:"4130 Prescott Ave", kind:"Two-Story Duplex", pi:3, img:"4130.webp"}
+      ]
+    },
+    {
+      group:"In Construction", status:"building",
+      note:"Actively under construction on Hawthorn Avenue.",
+      items:[
+        {addr:"3912 Hawthorn Ave", kind:"Two-Story Duplex", pi:0, img:"3912.webp"},
+        {addr:"3914 Hawthorn Ave", kind:"Two-Story Duplex", pi:2, img:"3914.webp"}
+      ]
+    },
+    {
+      group:"In Planning", status:"planning",
+      note:"A new six-plex collection — two three-unit buildings in the planning stage.",
+      items:[
+        {addr:"4015 Hershel Ave", kind:"Six-Plex &middot; Three Residences", units:["A","B","C"], pi:1, img:"4015.webp"},
+        {addr:"4017 Hershel Ave", kind:"Six-Plex &middot; Three Residences", units:["A","B","C"], pi:3, img:"4017.webp"}
+      ]
+    }
+  ];
+  var statusMeta = {
+    planning:{label:"In Planning", stage:0},
+    building:{label:"In Construction", stage:1},
+    soon:{label:"Nearly Complete", stage:2}
+  };
+  var stageLabels = ["Planning","Construction","Nearly Done"];
+
+  function trackMarkup(stage, status){
+    var lis = stageLabels.map(function(lbl, i){
+      var cls = i < stage ? "is-done" : (i === stage ? "is-active" : "");
+      return '<li class="'+cls+'"><span class="dot"></span><b>'+lbl+'</b></li>';
+    }).join("");
+    return '<ol class="up-track" aria-label="Stage: '+statusMeta[status].label+'">'+lis+'</ol>';
+  }
+
+  var upWrap = document.getElementById("upcomingPhases");
+  if(upWrap){
+    upcoming.forEach(function(phase){
+      var meta = statusMeta[phase.status];
+      var phaseEl = document.createElement("div");
+      phaseEl.className = "up-phase reveal";
+      phaseEl.setAttribute("data-d", "1");
+
+      var cards = phase.items.map(function(it, i){
+        var photo = '<img class="ph-photo" src="'+it.img+'" alt="Exterior rendering of '+it.addr+'" loading="lazy" onerror="this.remove()">';
+        var units = "";
+        if(it.units){
+          units = '<div class="up-units">' + it.units.map(function(u){
+            return '<span class="up-unit"><span>Unit '+u+'</span><b>'+meta.label+'</b></span>';
+          }).join("") + '</div>';
+        }
+        return '<article class="up-card reveal" data-d="'+((i % 2) + 1)+'">'
+          + '<div class="ph">'+ phMarkup(it.pi) + photo
+          +   '<span class="ph-status is-'+phase.status+'">'+ meta.label +'</span>'
+          + '</div>'
+          + '<div class="up-info">'
+          +   '<h3>'+ it.addr +'</h3>'
+          +   '<p class="meta">'+ it.kind +'</p>'
+          +   units
+          +   trackMarkup(meta.stage, phase.status)
+          + '</div>'
+          + '</article>';
+      }).join("");
+
+      phaseEl.innerHTML =
+        '<div class="up-phase-head">'
+        +   '<h3>'+ phase.group +'</h3>'
+        +   '<span class="status-pill is-'+phase.status+'">'+ meta.label +'</span>'
+        + '</div>'
+        + '<p class="up-phase-note">'+ phase.note +'</p>'
+        + '<div class="up-grid">'+ cards +'</div>';
+      upWrap.appendChild(phaseEl);
+    });
+  }
 
   /* ---- header scroll state ---- */
   var header = document.getElementById("header");

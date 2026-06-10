@@ -57,8 +57,7 @@
 
   <div class="container hero-inner">
     <div class="hero-copy">
-      <span class="eyebrow hero-eyebrow hl d1">Luxury Duplex Homes &middot; Dallas, Texas</span>
-      <h1 class="hl d2">Modern Style.<br><em>Affordable Luxury.</em></h1>
+<h1 class="hl d2">Modern Style.<br><em>Affordable Luxury.</em></h1>
       <p class="hero-sub hl d3">Carefully crafted, thoughtfully designed two-story homes for a sophisticated lifestyle.</p>
       <div class="hero-actions hl d4">
         <a href="#properties" class="btn btn-primary">View Our Properties
@@ -103,7 +102,12 @@
     </div>
 
     <div class="about-story-media reveal" data-d="1">
-      <img class="about-story-photo" src="kitchen.webp" alt="Interior kitchen of a Coolam Development home" loading="lazy" decoding="async" onerror="this.closest('.about-story-media').style.display='none'" />
+      <figure class="story-photo story-photo-top">
+        <img src="3943.webp" alt="Exterior of a Coolam Development home on Hawthorn Avenue" loading="lazy" decoding="async" onerror="this.style.opacity=0" />
+      </figure>
+      <figure class="story-photo story-photo-bottom">
+        <img src="kitchen.webp" alt="Interior kitchen of a Coolam Development home" loading="lazy" decoding="async" onerror="this.style.opacity=0" />
+      </figure>
     </div>
   </div>
 
@@ -142,19 +146,50 @@
   <div class="container">
     <div class="prop-head">
       <span class="eyebrow reveal">Our Portfolio</span>
-      <h2 class="reveal" data-d="1">Your <em>next home</em> awaits.</h2>
-      <p class="reveal" data-d="2">Original design and impeccable craftsmanship across four duplex residences on Hawthorn Avenue. Take a look.</p>
+    </div>
+
+    <div class="prop-subhead reveal" data-d="1">
+      <h3>Hawthorn Avenue Duplexes</h3>
+      <span class="status-pill is-sold">All Sold</span>
     </div>
 
     <div class="prop-grid" id="propGrid">
-      <!-- cards injected by script.js for consistency -->
+      <!-- duplex cards injected by script.js for consistency -->
     </div>
 
-    <div class="section-cta reveal" data-d="3">
-      <a href="#contact" class="btn btn-liquid btn-liquid-light">
-        <span>Inquire about availability</span>
+    <div class="prop-subhead reveal" data-d="1">
+      <h3>The Six-Plex Collection</h3>
+      <span class="status-pill is-sold">All Sold</span>
+    </div>
+
+    <div class="plex-grid" id="plexGrid">
+      <!-- six-plex building cards injected by script.js -->
+    </div>
+
+    <div class="dev-teaser reveal" data-d="2">
+      <div class="dev-teaser-copy">
+        <span class="eyebrow">In Development</span>
+        <h3>A new collection is on the way.</h3>
+        <p>We are currently building our next homes. Check back soon for the upcoming release — or reach out to be the first to know.</p>
+      </div>
+      <a href="#contact" class="btn btn-liquid btn-liquid-light dev-teaser-cta">
+        <span>Be the first to know</span>
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= UPCOMING ============================= -->
+<section class="upcoming" id="upcoming">
+  <div class="container">
+    <div class="up-head">
+      <span class="eyebrow reveal">What's Next</span>
+      <h2 class="reveal" data-d="1">In development <em>now.</em></h2>
+      <p class="reveal" data-d="2">A look at the residences moving through our pipeline — from sites in the planning stage to homes nearing completion.</p>
+    </div>
+    <div id="upcomingPhases">
+      <!-- phase groups injected by script.js -->
     </div>
   </div>
 </section>
@@ -349,14 +384,15 @@
     <div class="modal-body">
       <span class="eyebrow">Duplex Residence</span>
       <h3 id="modalTitle"></h3>
+      <span class="status-pill is-sold modal-status">Sold</span>
       <div class="modal-specs">
         <div class="sp"><b id="mSqft"></b><span>Sq Ft</span></div>
         <div class="sp"><b id="mBed"></b><span>Bed</span></div>
         <div class="sp"><b id="mBath"></b><span>Bath</span></div>
         <div class="sp"><b id="mStories">2</b><span>Stories</span></div>
       </div>
-      <p>Two-story, open floor-plan duplex featuring high-end natural finishes, earth-tone palettes, and signature Sub-Zero &amp; Wolf appliances. Built move-in ready in partnership with H+F Construction. <em>Specifications are illustrative.</em></p>
-      <a href="#contact" class="btn btn-primary" data-close>Schedule a Viewing
+      <p>A two-story, open floor-plan duplex with high-end natural finishes, earth-tone palettes, and signature Sub-Zero &amp; Wolf appliances, built move-in ready in partnership with H+F Construction. This residence has sold. <em>Specifications are illustrative.</em></p>
+      <a href="#contact" class="btn btn-primary" data-close>Inquire About Upcoming Homes
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
