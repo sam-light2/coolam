@@ -147,12 +147,6 @@
 
       var cards = phase.items.map(function(it, i){
         var photo = '<img class="ph-photo" src="'+it.img+'" alt="Exterior rendering of '+it.addr+'" loading="lazy" onerror="this.remove()">';
-        var units = "";
-        if(it.units){
-          units = '<div class="up-units">' + it.units.map(function(u){
-            return '<span class="up-unit"><span>Unit '+u+'</span><b>'+meta.label+'</b></span>';
-          }).join("") + '</div>';
-        }
         return '<article class="up-card reveal" data-d="'+((i % 2) + 1)+'">'
           + '<div class="ph">'+ phMarkup(it.pi) + photo
           +   '<span class="ph-status is-'+phase.status+'">'+ meta.label +'</span>'
@@ -160,7 +154,6 @@
           + '<div class="up-info">'
           +   '<h3>'+ it.addr +'</h3>'
           +   '<p class="meta">'+ it.kind +'</p>'
-          +   units
           +   trackMarkup(meta.stage, phase.status)
           + '</div>'
           + '</article>';
