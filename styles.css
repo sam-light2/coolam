@@ -109,7 +109,7 @@ section{scroll-margin-top:84px;}
 
 @media (min-width: 920px) {
   .nav-links {
-    margin-right: -2rem; /* Increase to -4rem etc. to pull it further right */
+    margin-right: -4rem;
   }
   .brand{margin-left:-3rem;}
 }
@@ -314,7 +314,7 @@ section{scroll-margin-top:84px;}
 /* ============================================================
    ABOUT  (Our Story + stats over the kitchen background)
    ============================================================ */
-.about{position:relative;}
+.about{position:relative;background:var(--cream);}
 
 /* ---- story: airy editorial split — light copy + framed feature photo ---- */
 .about-story{
@@ -377,7 +377,7 @@ section{scroll-margin-top:84px;}
 /* ---- 4. foundation (pillars) ---- */
 .about-foundation{
   position:relative;
-  padding-block:clamp(3.5rem,7vw,6rem) clamp(4.5rem,9vw,7.5rem);
+  padding-block:clamp(3.5rem,7vw,6rem) clamp(7rem,13vw,11rem);
   background:var(--cream);
   overflow:hidden;isolation:isolate;
 }
@@ -672,6 +672,7 @@ section{scroll-margin-top:84px;}
 .footer-brand .word b{color:var(--paper-on-dark);font-size:1.5rem;}
 .footer-brand .word span{color:var(--muted-on-dark);}
 .footer-brand .mark{color:var(--gold);width:40px;height:40px;}
+.footer-brand .brand{margin-left:0!important;}
 .footer-brand p{margin:1.4rem 0 0;color:var(--muted-on-dark);max-width:34ch;font-size:.95rem;line-height:1.6;padding-left:0;margin-left:0;}
 .footer-col h4{margin:0 0 1.1rem;font-size:.72rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);}
 .footer-col ul{list-style:none;margin:0;padding:0;display:grid;gap:.7rem;}
