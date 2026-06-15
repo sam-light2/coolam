@@ -21,8 +21,8 @@
 
   /* six-plex collection: two three-unit buildings, every unit sold */
   var plexes = [
-    {addr:"3939 Hawthorn Ave", units:["A","B","C"], pi:0, img:"3939.webp"},
-    {addr:"3943 Hawthorn Ave", units:["A","B","C"], pi:2, img:"3943.webp"}
+    {addr:"3939 Hawthorn Ave", units:["A","B","C"], sqft:"2,283", bed:"2", bath:"2.5", pi:0, img:"3939.webp"},
+    {addr:"3943 Hawthorn Ave", units:["A","B","C"], sqft:"2,283", bed:"2", bath:"2.5", pi:2, img:"3943.webp"}
   ];
 
   /* art-directed CSS placeholder (renders behind the real photo) */
@@ -61,10 +61,6 @@
       + '<div class="prop-info">'
       +   '<h3>'+ p.addr +'</h3>'
       +   '<p class="meta">'+ p.bed +' Bed &middot; '+ p.bath +' Bath &middot; '+ p.sqft +' Sq Ft</p>'
-      +   '<div class="prop-foot">'
-      +     '<span class="prop-cta">View Details</span>'
-      +     '<span class="prop-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>'
-      +   '</div>'
       + '</div>';
     card.addEventListener("click", function(){ openModal(p); });
     grid.appendChild(card);
@@ -74,13 +70,11 @@
   var plexGrid = document.getElementById("plexGrid");
   if(plexGrid){
     plexes.forEach(function(b, i){
-      var chips = b.units.map(function(u){
-        return '<span class="unit-chip"><span>Unit '+u+'</span><b>Sold</b></span>';
-      }).join("");
       var photo = '<img class="ph-photo" src="'+b.img+'" alt="'+b.addr+' six-plex building" loading="lazy" onerror="this.remove()">';
-      var card = document.createElement("article");
+      var card = document.createElement("button");
       card.className = "plex-card reveal";
       card.setAttribute("data-d", String((i % 2) + 1));
+      card.setAttribute("aria-label", b.addr + ", sold six-plex, view details");
       card.innerHTML =
         '<div class="ph">'+ phMarkup(b.pi) + photo
         +   '<span class="ph-tag">Six-Plex Development</span>'
@@ -88,9 +82,20 @@
         + '</div>'
         + '<div class="prop-info">'
         +   '<h3>'+ b.addr +'</h3>'
-        +   '<p class="meta">Three residences &middot; Units A, B &amp; C</p>'
-        +   '<div class="unit-row">'+ chips +'</div>'
+        +   '<p class="meta">3 residences &middot; '+ b.bed +' Bed &middot; '+ b.bath +' Bath &middot; '+ b.sqft +' Sq Ft each</p>'
+        +   '<div class="unit-breakdown">'
+        +     '<span>Units A &amp; C &middot; 3 Bed &middot; 3&frac12; Bath</span>'
+        +     '<span>Unit B &middot; 2 Bed &middot; 2&frac12; Bath</span>'
+        +   '</div>'
         + '</div>';
+      card.addEventListener("click", function(){
+        openModal({
+          addr: b.addr, sqft: b.sqft, bed: b.bed, bath: b.bath, pi: b.pi, img: b.img,
+          kind: "Six-Plex Residence",
+          stat4: "3", stat4Label: "Residences",
+          desc: 'A three-residence building — each home offering an open floor plan with high-end natural finishes, earth-tone palettes, and signature Sub-Zero &amp; Wolf appliances, built move-in ready. Every unit has sold. <em>Specifications are illustrative and shown per residence.</em>'
+        });
+      });
       plexGrid.appendChild(card);
     });
   }
@@ -101,24 +106,24 @@
       group:"Nearly Complete", status:"soon",
       note:"Final finishes underway — these homes are nearing completion.",
       items:[
-        {addr:"4128 Prescott Ave", kind:"Two-Story Duplex", pi:1, img:"4128.webp"},
-        {addr:"4130 Prescott Ave", kind:"Two-Story Duplex", pi:3, img:"4130.webp"}
+        {addr:"4128 Prescott Ave", kind:"Two-Story Duplex", pi:1, img:"4128.png"},
+        {addr:"4130 Prescott Ave", kind:"Two-Story Duplex", pi:3, img:"4130.png"}
       ]
     },
     {
       group:"In Construction", status:"building",
       note:"Actively under construction on Hawthorn Avenue.",
       items:[
-        {addr:"3912 Hawthorn Ave", kind:"Two-Story Duplex", pi:0, img:"3912.webp"},
-        {addr:"3914 Hawthorn Ave", kind:"Two-Story Duplex", pi:2, img:"3914.webp"}
+        {addr:"3912 Hawthorn Ave", kind:"Two-Story Duplex", pi:0, img:"3912.png"},
+        {addr:"3914 Hawthorn Ave", kind:"Two-Story Duplex", pi:2, img:"3914.png"}
       ]
     },
     {
       group:"In Planning", status:"planning",
       note:"A new six-plex collection — two three-unit buildings in the planning stage.",
       items:[
-        {addr:"4015 Hershel Ave", kind:"Six-Plex &middot; Three Residences", units:["A","B","C"], pi:1, img:"4015.webp"},
-        {addr:"4017 Hershel Ave", kind:"Six-Plex &middot; Three Residences", units:["A","B","C"], pi:3, img:"4017.webp"}
+        {addr:"4015 Hershel Ave", kind:"Six-Plex &middot; Three Residences", units:["A","B","C"], pi:1, img:"4015.png"},
+        {addr:"4017 Hershel Ave", kind:"Six-Plex &middot; Three Residences", units:["A","B","C"], pi:3, img:"4017.png"}
       ]
     }
   ];
@@ -208,12 +213,17 @@
   /* ---- property modal ---- */
   var modal = document.getElementById("modal");
   var lastFocus = null;
+  var duplexDesc = 'A two-story, open floor-plan duplex with high-end natural finishes, earth-tone palettes, and signature Sub-Zero &amp; Wolf appliances, built move-in ready. This residence has sold. <em>Specifications are illustrative.</em>';
   function openModal(p){
     lastFocus = document.activeElement;
+    document.getElementById("modalKind").textContent = p.kind || "Duplex Residence";
     document.getElementById("modalTitle").textContent = p.addr;
     document.getElementById("mSqft").textContent = p.sqft;
     document.getElementById("mBed").textContent = p.bed;
     document.getElementById("mBath").textContent = p.bath;
+    document.getElementById("mStat4").textContent = p.stat4 || "2";
+    document.getElementById("mStat4Label").textContent = p.stat4Label || "Stories";
+    document.getElementById("modalDesc").innerHTML = p.desc || duplexDesc;
     document.getElementById("modalPh").innerHTML = phMarkup(p.pi) + photoMarkup(p);
     modal.classList.add("open");
     modal.setAttribute("aria-hidden","false");
