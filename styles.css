@@ -281,7 +281,16 @@ section{scroll-margin-top:84px;}
   text-shadow:0 2px 26px rgba(7,14,11,.45);
 }
 @media(max-width:680px){.hero h1{white-space:normal;}}
-.hero h1 em{font-style:italic;color:var(--gold);font-weight:340;}
+.hero h1 em{
+  font-style:italic;font-weight:340;
+  color:#fff;
+  animation:emGoldFade 1.4s var(--ease) forwards;
+  animation-delay:3s;
+}
+@keyframes emGoldFade{
+  from{color:#fff;}
+  to{color:var(--gold);}
+}
 .hero-sub{
   margin:1.6rem 0 0;max-width:46ch;font-size:clamp(1.08rem,1rem+.5vw,1.32rem);
   color:var(--paper-on-dark);opacity:.92;line-height:1.55;font-weight:400;
