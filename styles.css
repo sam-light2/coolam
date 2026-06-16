@@ -312,6 +312,92 @@ section{scroll-margin-top:84px;}
 @keyframes cue{0%{transform:scaleY(.2);transform-origin:top;opacity:.4}50%{transform:scaleY(1);opacity:1}100%{transform:scaleY(.2);transform-origin:bottom;opacity:.4}}
 
 /* ============================================================
+   VIDEO HERO  (full-screen looping background, centered content)
+   ============================================================ */
+.hero-video-mode{justify-content:center;text-align:center;}
+.hero-video-mode::before{content:none;}            /* drop the old decorative wash — the video is the backdrop */
+
+.hero-bg-video{
+  position:absolute;inset:0;z-index:-3;
+  width:100%;height:100%;object-fit:cover;object-position:center;
+  background:var(--forest);
+}
+/* cinematic legibility wash so the centered white text always clears WCAG contrast */
+.hero-bg-overlay{
+  position:absolute;inset:0;z-index:-2;pointer-events:none;
+  background:
+    linear-gradient(180deg,
+      rgba(10,18,14,.66) 0%,
+      rgba(10,18,14,.34) 28%,
+      rgba(10,18,14,.40) 60%,
+      rgba(8,16,12,.76) 100%),
+    radial-gradient(120% 82% at 50% 46%, transparent 28%, rgba(8,16,12,.48) 100%);
+}
+
+.hero-center{
+  position:relative;z-index:2;width:100%;max-width:var(--maxw);
+  padding-inline:var(--gutter);
+  display:flex;flex-direction:column;align-items:center;
+  gap:clamp(2rem,4vw,2.9rem);
+}
+.hero-video-mode h1{
+  margin:0;max-width:none;text-align:center;
+  text-shadow:0 2px 34px rgba(6,12,9,.6);
+}
+.hero-video-mode .hero-actions{margin-top:0;justify-content:center;}
+
+/* respect reduced motion: swap the video for a calm static brand gradient */
+@media(prefers-reduced-motion:reduce){
+  .hero-bg-video{display:none;}
+  .hero-video-mode{
+    background:
+      radial-gradient(120% 90% at 82% 18%, rgba(86,207,152,.30), transparent 46%),
+      linear-gradient(160deg,#13211B 0%,#18332A 48%,#102019 100%);
+  }
+}
+
+/* ============================================================
+   LIQUID GLASS BUTTON  (vanilla port of the shadcn LiquidButton —
+   real SVG backdrop distortion + frosted bevel, for use over the dark hero)
+   ============================================================ */
+.btn-glass{
+  position:relative;isolation:isolate;overflow:hidden;
+  background:transparent;color:var(--paper-on-dark);
+  border-radius:100px;
+  transition:transform .3s var(--ease);
+}
+.btn-glass:hover{transform:scale(1.05);}
+/* frosted bevel — layered insets give the glass its edge highlights */
+.btn-glass-shadow{
+  position:absolute;inset:0;z-index:0;border-radius:inherit;pointer-events:none;
+  box-shadow:
+    0 0 8px rgba(0,0,0,.03),
+    0 2px 6px rgba(0,0,0,.08),
+    inset 3px 3px .5px -3.5px rgba(255,255,255,.5),
+    inset -3px -3px .5px -3.5px rgba(255,255,255,.85),
+    inset 1px 1px 1px -.5px rgba(255,255,255,.6),
+    inset -1px -1px 1px -.5px rgba(255,255,255,.6),
+    inset 0 0 6px 6px rgba(255,255,255,.12),
+    inset 0 0 2px 2px rgba(255,255,255,.06),
+    0 0 12px rgba(0,0,0,.15);
+}
+/* real backdrop distortion via the #container-glass SVG filter (graceful fallback to a plain blur) */
+.btn-glass-distort{
+  position:absolute;inset:0;z-index:-1;border-radius:inherit;overflow:hidden;pointer-events:none;
+  -webkit-backdrop-filter:blur(2px);
+          backdrop-filter:blur(2px);
+}
+@supports (backdrop-filter:url("#container-glass")) or (-webkit-backdrop-filter:url("#container-glass")){
+  .btn-glass-distort{
+    -webkit-backdrop-filter:url("#container-glass");
+            backdrop-filter:url("#container-glass");
+  }
+}
+.btn-glass-label{position:relative;z-index:10;display:inline-flex;align-items:center;gap:.7rem;}
+.btn-glass-label svg{width:18px;height:18px;transition:transform .35s var(--ease);}
+.btn-glass:hover .btn-glass-label svg{transform:translateX(4px);}
+
+/* ============================================================
    ABOUT  (Our Story + stats over the kitchen background)
    ============================================================ */
 .about{position:relative;background:var(--cream);}
@@ -522,7 +608,7 @@ section{scroll-margin-top:84px;}
 .unit-breakdown span{font-size:.8rem;letter-spacing:.03em;color:var(--muted-on-dark);}
 
 /* in-development teaser banner */
-.dev-teaser{margin-top:clamp(2.75rem,5.5vw,4rem);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.5rem 2.5rem;padding:clamp(1.75rem,3.5vw,2.75rem);border:1px dashed rgba(86,207,152,.42);border-radius:var(--r-lg);background:rgba(86,207,152,.05);}
+.dev-teaser{margin-top:clamp(2.75rem,5.5vw,4rem);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.5rem 2.5rem;padding:clamp(1.75rem,3.5vw,2.75rem);border:1px dashed rgba(86,207,152,.42);border-radius:var(--r-lg);background:rgba(86,207,152,.13);}
 .dev-teaser-copy{max-width:48ch;}
 .dev-teaser-copy .eyebrow{color:var(--gold);}
 .dev-teaser-copy .eyebrow::before{background:var(--gold);}

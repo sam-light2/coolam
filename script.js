@@ -92,15 +92,15 @@
       note:"Final finishes underway — these homes are nearing completion.",
       items:[
         {addr:"4128 Prescott Ave", kind:"Two-Story Duplex", pi:1, img:"4128.png"},
-        {addr:"4130 Prescott Ave", kind:"Two-Story Duplex", pi:3, img:"4130.png", objPos:"30% center"}
+        {addr:"4130 Prescott Ave", kind:"Two-Story Duplex", pi:3, img:"4130.png", objPos:"5% center"}
       ]
     },
     {
       group:"In Construction", status:"building",
       note:"Actively under construction on Hawthorn Avenue.",
       items:[
-        {addr:"3912 Hawthorn Ave", kind:"Two-Story Duplex", pi:0, img:"3912.png", objPos:"65% center"},
-        {addr:"3914 Hawthorn Ave", kind:"Two-Story Duplex", pi:2, img:"3914.png", objPos:"70% center"}
+        {addr:"3912 Hawthorn Ave", kind:"Two-Story Duplex", pi:0, img:"3912.png", objPos:"75% center"},
+        {addr:"3914 Hawthorn Ave", kind:"Two-Story Duplex", pi:2, img:"3914.png", objPos:"90% center"}
       ]
     },
     {
@@ -153,6 +153,24 @@
       phaseEl.innerHTML = '<div class="up-grid">'+ cards +'</div>';
       upWrap.appendChild(phaseEl);
     });
+  }
+
+  /* ---- hero video: ensure it autoplays (muted, inline) across browsers ---- */
+  var heroVideo = document.querySelector(".hero-bg-video");
+  if(heroVideo){
+    heroVideo.muted = true; // required for programmatic autoplay
+    var tryPlay = function(){
+      var pr = heroVideo.play();
+      if(pr && typeof pr.catch === "function"){ pr.catch(function(){}); }
+    };
+    tryPlay();
+    heroVideo.addEventListener("canplay", tryPlay, {once:true});
+    document.addEventListener("visibilitychange", function(){
+      if(!document.hidden) tryPlay();
+    });
+    // last-resort: kick playback on the first user interaction
+    var kick = function(){ tryPlay(); window.removeEventListener("pointerdown", kick); };
+    window.addEventListener("pointerdown", kick, {passive:true});
   }
 
   /* ---- header scroll state ---- */
