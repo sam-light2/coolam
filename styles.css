@@ -285,7 +285,7 @@ section{scroll-margin-top:84px;}
   font-style:italic;font-weight:340;
   color:#fff;
   animation:emGoldFade 1.4s var(--ease) forwards;
-  animation-delay:3s;
+  animation-delay:1.5s;
 }
 @keyframes emGoldFade{
   from{color:#fff;}
