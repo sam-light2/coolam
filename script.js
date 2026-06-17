@@ -13,16 +13,12 @@
     {p1:"#4a8f76",p2:"#2c6450",p3:"#122b22"}
   ];
   var props = [
-    {addr:"3928 Hawthorn Ave", sqft:"3,498", bed:"3", bath:"3.5", pi:0, img:"3928.webp"},
-    {addr:"3930 Hawthorn Ave", sqft:"3,465", bed:"3", bath:"3.5", pi:1, img:"3930.webp"},
-    {addr:"4030 Hawthorn Ave", sqft:"3,218", bed:"3", bath:"3.5", pi:2, img:"4030.jpeg"},
-    {addr:"4032 Hawthorn Ave", sqft:"3,140", bed:"3", bath:"3.5", pi:3, img:"4032.jpeg"}
-  ];
-
-  /* six-plex collection: two three-unit buildings, every unit sold */
-  var plexes = [
-    {addr:"3939 Hawthorn Ave", units:["A","B","C"], sqft:"2,283", bed:"3", bath:"3.5", pi:0, img:"3939.webp"},
-    {addr:"3943 Hawthorn Ave", units:["A","B","C"], sqft:"2,283", bed:"3", bath:"3.5", pi:2, img:"3943.webp"}
+    {addr:"3928 Hawthorn Ave", sqft:"3,498", bed:"3", bath:"3.5", pi:0, img:"3928.webp", kind:"duplex"},
+    {addr:"3930 Hawthorn Ave", sqft:"3,465", bed:"3", bath:"3.5", pi:1, img:"3930.webp", kind:"duplex"},
+    {addr:"3939 Hawthorn Ave", sqft:"2,283", bed:"3", bath:"3.5", pi:0, img:"3939.webp", kind:"plex"},
+    {addr:"3943 Hawthorn Ave", sqft:"2,283", bed:"3", bath:"3.5", pi:2, img:"3943.webp", kind:"plex"},
+    {addr:"4030 Hawthorn Ave", sqft:"3,218", bed:"3", bath:"3.5", pi:2, img:"4030.jpeg", kind:"duplex"},
+    {addr:"4032 Hawthorn Ave", sqft:"3,140", bed:"3", bath:"3.5", pi:3, img:"4032.jpeg", kind:"duplex"}
   ];
 
   /* art-directed CSS placeholder (renders behind the real photo) */
@@ -49,41 +45,27 @@
   /* build property cards */
   var grid = document.getElementById("propGrid");
   props.forEach(function(p, i){
+    var isPlex = p.kind === "plex";
+    var tag = isPlex ? "Six-Plex" : "Duplex";
+    var meta = isPlex
+      ? '3 residences &middot; '+ p.bed +' Bed &middot; '+ p.bath +' Bath &middot; '+ p.sqft +' Sq Ft each'
+      : p.bed +' Bed &middot; '+ p.bath +' Bath &middot; '+ p.sqft +' Sq Ft';
+    var altText = isPlex ? p.addr+' six-plex building' : p.addr+' exterior';
+    var photo = '<img class="ph-photo" src="'+p.img+'" alt="'+altText+'" loading="lazy" onerror="this.remove()">';
     var card = document.createElement("article");
     card.className = "prop-card reveal";
     card.setAttribute("data-d", String((i % 2) + 1));
     card.innerHTML =
-      '<div class="ph">'+ phMarkup(p.pi) + photoMarkup(p)
-      +   '<span class="ph-tag">Duplex</span>'
+      '<div class="ph">'+ phMarkup(p.pi) + photo
+      +   '<span class="ph-tag">'+ tag +'</span>'
       +   '<span class="ph-status is-sold">Sold</span>'
       + '</div>'
       + '<div class="prop-info">'
       +   '<h3>'+ p.addr +'</h3>'
-      +   '<p class="meta">'+ p.bed +' Bed &middot; '+ p.bath +' Bath &middot; '+ p.sqft +' Sq Ft</p>'
+      +   '<p class="meta">'+ meta +'</p>'
       + '</div>';
     grid.appendChild(card);
   });
-
-  /* build six-plex building cards (informational, every unit sold) */
-  var plexGrid = document.getElementById("plexGrid");
-  if(plexGrid){
-    plexes.forEach(function(b, i){
-      var photo = '<img class="ph-photo" src="'+b.img+'" alt="'+b.addr+' six-plex building" loading="lazy" onerror="this.remove()">';
-      var card = document.createElement("article");
-      card.className = "plex-card reveal";
-      card.setAttribute("data-d", String((i % 2) + 1));
-      card.innerHTML =
-        '<div class="ph">'+ phMarkup(b.pi) + photo
-        +   '<span class="ph-tag">Six-Plex</span>'
-        +   '<span class="ph-status is-sold">Sold</span>'
-        + '</div>'
-        + '<div class="prop-info">'
-        +   '<h3>'+ b.addr +'</h3>'
-        +   '<p class="meta">3 residences &middot; '+ b.bed +' Bed &middot; '+ b.bath +' Bath &middot; '+ b.sqft +' Sq Ft each</p>'
-        + '</div>';
-      plexGrid.appendChild(card);
-    });
-  }
 
   /* ---- upcoming / in-development pipeline ---- */
   var upcoming = [
@@ -92,15 +74,15 @@
       note:"Final finishes underway — these homes are nearing completion.",
       items:[
         {addr:"4128 Prescott Ave", kind:"Two-Story Duplex", pi:1, img:"4128.png"},
-        {addr:"4130 Prescott Ave", kind:"Two-Story Duplex", pi:3, img:"4130.png", objPos:"5% center"}
+        {addr:"4130 Prescott Ave", kind:"Two-Story Duplex", pi:3, img:"4130.png", objPos:"67% center"}
       ]
     },
     {
       group:"In Construction", status:"building",
       note:"Actively under construction on Hawthorn Avenue.",
       items:[
-        {addr:"3912 Hawthorn Ave", kind:"Two-Story Duplex", pi:0, img:"3912.png", objPos:"75% center"},
-        {addr:"3914 Hawthorn Ave", kind:"Two-Story Duplex", pi:2, img:"3914.png", objPos:"90% center"}
+        {addr:"3912 Hawthorn Ave", kind:"Two-Story Duplex", pi:0, img:"3912.png", objPos:"50% center"},
+        {addr:"3914 Hawthorn Ave", kind:"Two-Story Duplex", pi:2, img:"3914.png", objPos:"20% center"}
       ]
     },
     {

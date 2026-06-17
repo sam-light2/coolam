@@ -537,8 +537,8 @@ section{scroll-margin-top:84px;}
 /* ============================================================
    PROPERTIES
    ============================================================ */
-.properties{background:var(--forest);color:var(--paper-on-dark);padding-block:var(--sec-pad);position:relative;overflow:hidden;}
-.properties::before{content:"";position:absolute;inset:0;background:radial-gradient(80% 60% at 80% -10%,rgba(86,207,152,.16),transparent 60%);pointer-events:none;}
+.properties{background:#0C1510;color:var(--paper-on-dark);padding-block:var(--sec-pad);position:relative;overflow:hidden;}
+.properties::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 50% at 78% -6%,rgba(86,207,152,.07),transparent 55%);pointer-events:none;}
 .prop-head{position:relative;display:flex;flex-direction:column;gap:.9rem;}
 .prop-head .eyebrow{color:var(--gold);}
 .prop-head .eyebrow::before{background:var(--gold);}
