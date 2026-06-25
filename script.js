@@ -37,11 +37,6 @@
       + '</div>';
   }
 
-  /* real photo layer; removes itself if the file is missing so the placeholder shows */
-  function photoMarkup(p){
-    return '<img class="ph-photo" src="'+p.img+'" alt="'+p.addr+' exterior" loading="lazy" onerror="this.remove()">';
-  }
-
   /* build property cards */
   var grid = document.getElementById("propGrid");
   props.forEach(function(p, i){
@@ -196,54 +191,53 @@
     reveals.forEach(function(el){ io.observe(el); });
   }
 
-  /* ---- property modal ---- */
-  var modal = document.getElementById("modal");
-  var lastFocus = null;
-  var duplexDesc = 'A two-story, open floor-plan duplex with high-end natural finishes, earth-tone palettes, and signature Sub-Zero &amp; Wolf appliances, built move-in ready. This residence has sold. <em>Specifications are illustrative.</em>';
-  function openModal(p){
-    lastFocus = document.activeElement;
-    document.getElementById("modalKind").textContent = p.kind || "Duplex Residence";
-    document.getElementById("modalTitle").textContent = p.addr;
-    document.getElementById("mSqft").textContent = p.sqft;
-    document.getElementById("mBed").textContent = p.bed;
-    document.getElementById("mBath").textContent = p.bath;
-    document.getElementById("mStat4").textContent = p.stat4 || "2";
-    document.getElementById("mStat4Label").textContent = p.stat4Label || "Stories";
-    document.getElementById("modalDesc").innerHTML = p.desc || duplexDesc;
-    document.getElementById("modalPh").innerHTML = phMarkup(p.pi) + photoMarkup(p);
-    modal.classList.add("open");
-    modal.setAttribute("aria-hidden","false");
-    document.body.classList.add("nav-open");
-    document.getElementById("modalClose").focus();
-  }
-  function closeModal(){
-    modal.classList.remove("open");
-    modal.setAttribute("aria-hidden","true");
-    document.body.classList.remove("nav-open");
-    if(lastFocus) lastFocus.focus();
-  }
-  modal.addEventListener("click", function(e){
-    if(e.target.hasAttribute("data-close") || e.target.closest("[data-close]")) closeModal();
-  });
-  document.getElementById("modalClose").addEventListener("click", closeModal);
+  /* ---- close mobile menu on Escape ---- */
   document.addEventListener("keydown", function(e){
-    if(e.key === "Escape"){
-      if(modal.classList.contains("open")) closeModal();
-      else if(navLinks.classList.contains("open")) closeMenu();
-    }
+    if(e.key === "Escape" && navLinks.classList.contains("open")) closeMenu();
   });
 
-  /* ---- contact form ---- */
+  /* ---- contact form (delivers to steven@coolam.com via FormSubmit AJAX) ---- */
   var form = document.getElementById("contactForm");
   var success = document.getElementById("formSuccess");
+  var formError = document.getElementById("formError");
+  var submitBtn = form.querySelector(".submit-btn");
+  var submitBtnHTML = submitBtn ? submitBtn.innerHTML : "";
+  function restoreBtn(){
+    if(!submitBtn) return;
+    submitBtn.disabled = false;
+    submitBtn.classList.remove("is-sending");
+    submitBtn.innerHTML = submitBtnHTML;
+  }
   form.addEventListener("submit", function(e){
     e.preventDefault();
     if(!form.checkValidity()){ form.reportValidity(); return; }
-    success.classList.add("show");
+    if(formError) formError.hidden = true;
+    if(submitBtn){
+      submitBtn.disabled = true;
+      submitBtn.classList.add("is-sending");
+      submitBtn.textContent = "Sending…";
+    }
+    fetch("https://formsubmit.co/ajax/steven@coolam.com", {
+      method:"POST",
+      headers:{ "Accept":"application/json" },
+      body:new FormData(form)
+    }).then(function(res){
+      if(!res.ok) throw new Error("bad response");
+      return res.json();
+    }).then(function(){
+      restoreBtn();
+      form.reset();
+      success.classList.add("show");
+    }).catch(function(){
+      restoreBtn();
+      if(formError) formError.hidden = false;
+    });
   });
   document.getElementById("resetForm").addEventListener("click", function(){
     success.classList.remove("show");
+    if(formError) formError.hidden = true;
     form.reset();
+    restoreBtn();
     document.getElementById("name").focus();
   });
 

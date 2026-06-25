@@ -5,15 +5,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Coolam Development | Modern Style. Affordable Luxury.</title>
 <meta name="description" content="Coolam Development builds modern luxury duplex homes in Dallas, Texas. Move-in ready, nature-inspired design, and best-in-class craftsmanship from $1 million." />
+<meta name="theme-color" content="#1C302A" />
+<link rel="canonical" href="https://coolam.com/" />
+
+<!-- Social sharing (Open Graph + Twitter). Absolute URLs assume the coolam.com domain. -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Coolam Development" />
+<meta property="og:title" content="Coolam Development | Modern Style. Affordable Luxury." />
+<meta property="og:description" content="Modern luxury duplex homes in Dallas, Texas — move-in ready, nature-inspired design, and best-in-class craftsmanship from $1 million." />
+<meta property="og:url" content="https://coolam.com/" />
+<meta property="og:image" content="https://coolam.com/4030.jpeg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Coolam Development | Modern Style. Affordable Luxury." />
+<meta name="twitter:description" content="Modern luxury duplex homes in Dallas, Texas — move-in ready, nature-inspired design, and best-in-class craftsmanship from $1 million." />
+<meta name="twitter:image" content="https://coolam.com/4030.jpeg" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-<link rel="icon" type="image/png" href="favicon.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="favicon.png" />
+<link rel="icon" type="image/png" sizes="128x128" href="favicon-128.png" />
+<link rel="icon" href="favicon.ico" sizes="any" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+
+<a class="skip-link" href="#top">Skip to content</a>
 
 <!-- ============================= HEADER ============================= -->
 <header class="site-header" id="header">
@@ -39,7 +58,7 @@
 
 <!-- ============================= HERO (centered video background) ============================= -->
 <section class="hero hero-video-mode" aria-label="Introduction">
-  <video class="hero-bg-video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+  <video class="hero-bg-video" autoplay muted loop playsinline preload="metadata" poster="hero-poster.jpg" aria-hidden="true">
     <source src="timelapse.mp4" type="video/mp4" />
   </video>
   <div class="hero-bg-overlay" aria-hidden="true"></div>
@@ -127,7 +146,8 @@
 <section class="properties" id="properties">
   <div class="container">
     <div class="prop-head">
-      <span class="eyebrow reveal">Our Portfolio</span>
+      <h2 class="sr-only">Our Portfolio</h2>
+      <span class="eyebrow reveal" aria-hidden="true">Our Portfolio</span>
     </div>
 
     <div class="prop-grid" id="propGrid">
@@ -240,7 +260,12 @@
     </div>
 
     <div class="form-wrap reveal" data-d="1">
-      <form id="contactForm" novalidate>
+      <form id="contactForm" action="https://formsubmit.co/steven@coolam.com" method="POST" novalidate>
+        <!-- FormSubmit delivery config -->
+        <input type="hidden" name="_subject" value="New inquiry from the Coolam website" />
+        <input type="hidden" name="_template" value="table" />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="text" name="_honey" autocomplete="off" style="display:none" />
         <div class="field-row">
           <div class="field">
             <label for="name">Name <span class="req">*</span></label>
@@ -263,6 +288,8 @@
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </form>
+
+      <p class="form-error" id="formError" role="alert" hidden>Something went wrong sending your message. Please email <a href="mailto:steven@coolam.com">steven@coolam.com</a> directly.</p>
 
       <div class="form-success" id="formSuccess" role="status" aria-live="polite">
         <div class="check"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
@@ -302,32 +329,6 @@
     </div>
   </div>
 </footer>
-
-<!-- ============================= MODAL ============================= -->
-<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
-  <div class="modal-scrim" data-close></div>
-  <div class="modal-panel" role="document">
-    <button class="modal-close" id="modalClose" aria-label="Close dialog">
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-    </button>
-    <div class="modal-ph" id="modalPh"></div>
-    <div class="modal-body">
-      <span class="eyebrow" id="modalKind">Duplex Residence</span>
-      <h3 id="modalTitle"></h3>
-      <span class="status-pill is-sold modal-status">Sold</span>
-      <div class="modal-specs">
-        <div class="sp"><b id="mSqft"></b><span>Sq Ft</span></div>
-        <div class="sp"><b id="mBed"></b><span>Bed</span></div>
-        <div class="sp"><b id="mBath"></b><span>Bath</span></div>
-        <div class="sp"><b id="mStat4">2</b><span id="mStat4Label">Stories</span></div>
-      </div>
-      <p id="modalDesc">A two-story, open floor-plan duplex with high-end natural finishes, earth-tone palettes, and signature Sub-Zero &amp; Wolf appliances, built move-in ready in partnership with H+F Construction. This residence has sold. <em>Specifications are illustrative.</em></p>
-      <a href="#contact" class="btn btn-primary" data-close>Inquire About Upcoming Homes
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-    </div>
-  </div>
-</div>
 
 <!-- liquid-glass distortion filter (ported from the shadcn LiquidButton) -->
 <svg class="glass-defs" width="0" height="0" aria-hidden="true" style="position:absolute;pointer-events:none">
