@@ -13,12 +13,12 @@
     {p1:"#4a8f76",p2:"#2c6450",p3:"#122b22"}
   ];
   var props = [
-    {addr:"3928 Hawthorn Ave", sqft:"3,498", bed:"3", bath:"3.5", pi:0, img:"3928.webp", kind:"duplex"},
-    {addr:"3930 Hawthorn Ave", sqft:"3,465", bed:"3", bath:"3.5", pi:1, img:"3930.webp", kind:"duplex"},
-    {addr:"3939 Hawthorn Ave", sqft:"2,283", bed:"3", bath:"3.5", pi:0, img:"3939.webp", kind:"plex"},
-    {addr:"3943 Hawthorn Ave", sqft:"2,283", bed:"3", bath:"3.5", pi:2, img:"3943.webp", kind:"plex"},
-    {addr:"4030 Hawthorn Ave", sqft:"3,218", bed:"3", bath:"3.5", pi:2, img:"4030.jpeg", kind:"duplex"},
-    {addr:"4032 Hawthorn Ave", sqft:"3,140", bed:"3", bath:"3.5", pi:3, img:"4032.jpeg", kind:"duplex"}
+    {addr:"3928 Hawthorn Ave", sqft:"3,498", bed:"3", bath:"3.5", pi:0, img:"3928.webp", kind:"duplex", link:"https://www.zillow.com/homedetails/3928-Hawthorne-Ave-Dallas-TX-75219/26693087_zpid/"},
+    {addr:"3930 Hawthorn Ave", sqft:"3,465", bed:"3", bath:"3.5", pi:1, img:"3930.webp", kind:"duplex", link:"https://www.zillow.com/homedetails/3930-Hawthorne-Ave-Dallas-TX-75219/26693086_zpid/"},
+    {addr:"3939 Hawthorn Ave", sqft:"2,283", bed:"3", bath:"3.5", pi:0, img:"3939.webp", kind:"plex", link:"https://www.zillow.com/homedetails/3939-Hawthorne-Ave-103-Dallas-TX-75219/453629554_zpid/"},
+    {addr:"3943 Hawthorn Ave", sqft:"2,283", bed:"3", bath:"3.5", pi:2, img:"3943.webp", kind:"plex", link:"https://www.zillow.com/homedetails/3943-Hawthorne-Ave-102-Dallas-TX-75219/452126483_zpid/"},
+    {addr:"4030 Hawthorn Ave", sqft:"3,218", bed:"3", bath:"3.5", pi:2, img:"4030.jpeg", kind:"duplex", link:"https://www.zillow.com/homedetails/4030-Hawthorne-Ave-Dallas-TX-75219/26693036_zpid/"},
+    {addr:"4032 Hawthorn Ave", sqft:"3,140", bed:"3", bath:"3.5", pi:3, img:"4032.jpeg", kind:"duplex", link:"https://www.zillow.com/homedetails/4032-Hawthorne-Ave-Dallas-TX-75219/339351966_zpid/"}
   ];
 
   /* art-directed CSS placeholder (renders behind the real photo) */
@@ -47,8 +47,14 @@
       : p.bed +' Bed &middot; '+ p.bath +' Bath &middot; '+ p.sqft +' Sq Ft';
     var altText = isPlex ? p.addr+' six-plex building' : p.addr+' exterior';
     var photo = '<img class="ph-photo" src="'+p.img+'" alt="'+altText+'" loading="lazy" onerror="this.remove()">';
-    var card = document.createElement("article");
+    var card = document.createElement(p.link ? "a" : "article");
     card.className = "prop-card reveal";
+    if(p.link){
+      card.href = p.link;
+      card.target = "_blank";
+      card.rel = "noopener noreferrer";
+      card.setAttribute("aria-label", "View " + p.addr + " on Zillow (opens in a new tab)");
+    }
     card.setAttribute("data-d", String((i % 2) + 1));
     card.innerHTML =
       '<div class="ph">'+ phMarkup(p.pi) + photo
